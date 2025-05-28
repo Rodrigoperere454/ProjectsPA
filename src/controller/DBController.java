@@ -1109,6 +1109,7 @@ public class DBController {
             if (rs.next()) {
                 int idGerado = rs.getInt("id");
                 fabricante.setId(idGerado);
+                enviarNotificacao(idGerado, "Pedido de Registo de Conta", "fabricante", "Gestores");
                 return true;
             }
         } catch (SQLException e) {
@@ -1138,8 +1139,13 @@ public class DBController {
             stmt.setString(9, tecnico.getArea_especializacao());
             stmt.setInt(10, tecnico.getNivel_certificacao());
 
-            stmt.executeUpdate();
-            return true;
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                int idGerado = rs.getInt("id");
+                tecnico.setId(idGerado);
+                enviarNotificacao(idGerado, "Pedido de Registo de Conta", "tecnico", "Gestores");
+                return true;
+            }
 
         } catch (SQLException e) {
             System.err.println("\033[31mErro ao inserir técnico: \033[0m" + e.getMessage());
