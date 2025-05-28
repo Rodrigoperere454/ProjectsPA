@@ -1,4 +1,5 @@
 package view.frames;
+package view.panels;
 
 import javax.swing.*;
 import java.awt.*;
@@ -56,7 +57,11 @@ public class AdminMenuFrame extends JFrame implements ActionListener {
         for (int i = 0; i < botoes.length; i++) {
             if (source == botoes[i]) {
                 switch (i) {
-                    case 0: registarGestor(); break;
+                    case 0:
+                        this.setContentPane(GestorPanel registarGestorPanel = new GestorPanel("registar"));
+                        this.revalidate();
+                        this.repaint();
+                        break;
                     case 1: listarUtilizadores(); break;
                     case 2: pesquisarUtilizadores(); break;
                     case 3: verNotificacoes(); break;
