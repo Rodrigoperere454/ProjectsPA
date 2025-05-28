@@ -30,8 +30,5 @@ public class Main {
                 DBconfig.configurarBD();
             }
         }
-
-        UtilizadorController runner = new UtilizadorController();
-        runner.menuInicial();
     }
 }
