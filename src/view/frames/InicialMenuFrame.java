@@ -1,4 +1,6 @@
-package view;
+package view.frames;
+
+import view.dialogs.LoginDialog;
 
 import javax.swing.*;
 import java.awt.*;

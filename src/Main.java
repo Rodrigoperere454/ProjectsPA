@@ -1,6 +1,7 @@
 import controller.DBconfig;
 import controller.UtilizadorController;
-import view.InicialMenuFrame;
+//import view.frames.InicialMenuFrame;
+import view.frames.TechMenuFrame;
 
 import java.sql.Connection;
 
@@ -10,13 +11,15 @@ public class Main {
      * @param args
      */
     public static void main(String[] args) throws Exception {
-        InicialMenuFrame menuInicial = new InicialMenuFrame();
-        //menuInicial.add(new InicialMenuPanel());
+        /* InicialMenuFrame menuInicial = new InicialMenuFrame();
         menuInicial.setSize(400, 400);
         menuInicial.setVisible(true);
-        //Repaint();
-        //revalidate();
-        //JDialog
+        */
+
+        TechMenuFrame techMenuFrame = new TechMenuFrame();
+        techMenuFrame.setSize(400, 580);
+        techMenuFrame.setVisible(true);
+
         Connection connection = null;
 
         while (connection == null) {
