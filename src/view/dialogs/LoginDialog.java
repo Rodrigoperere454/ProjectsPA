@@ -2,6 +2,8 @@ package view.dialogs;
 
 import controller.*;
 import model.Utilizador;
+import view.frames.AdminMenuFrame;
+import view.frames.FabMenuFrame;
 import view.frames.InicialMenuFrame;
 import view.frames.TechMenuFrame;
 
@@ -69,9 +71,11 @@ public class LoginDialog extends JDialog implements ActionListener {
                     TechMenuFrame menuTech = new TechMenuFrame();
                     menuTech.setVisible(true);
                 } else if (utilizador.getType().equalsIgnoreCase("fabricante")) {
-                    System.out.println(utilizador.getUsername());
+                    FabMenuFrame menuFab = new FabMenuFrame();
+                    menuFab.setVisible(true);
                 } else {
-                    System.out.println(utilizador.getUsername());
+                    AdminMenuFrame menuAdmin = new AdminMenuFrame();
+                    menuAdmin.setVisible(true);
                 }
                 dispose();
                 this.parentFrame.dispose();
