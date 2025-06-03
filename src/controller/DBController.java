@@ -146,17 +146,22 @@ public class DBController {
      * @return
      * @throws Exception
      */
-    public String hashPassword(String password) throws Exception {
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-        byte[] digest = md.digest(password.getBytes());
+    public String hashPassword(String password){
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] digest = md.digest(password.getBytes());
 
-        StringBuilder hexString = new StringBuilder();
-        for (byte b : digest) {
-            hexString.append(String.format("%02x", b));
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : digest) {
+                hexString.append(String.format("%02x", b));
+            }
+            return hexString.toString();
+
+        }catch (Exception e){
+            System.err.println("\033[31mErro ao encriptar a password: \033[0m" + e.getMessage());
         }
-        return hexString.toString();
+        return null;
     }
-
     /**
      * Função para enviar uma notificação para a bd. Recebe o id do utilizador, a descrição, o tipo e o encarregado e insere na tabela notificações.
      * @param idUtilizador
@@ -995,20 +1000,25 @@ public class DBController {
      * @param utilizador
      * @return true or false
      */
-    public boolean inserirUtilizador(Utilizador utilizador) {
-        String sql = "INSERT INTO utilizadores (nome, username, password, email, tipo) VALUES (?, ?, ?, ?, ?)";
+    public boolean inserirUtilizador(Utilizador utilizador){
+        String sql = "INSERT INTO utilizadores (nome, username, password, estado, email, tipo) VALUES (?, ?, ?, ?, ?, ?)";
 
+        String hashedPassword = hashPassword(utilizador.getPassword());
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setString(1, utilizador.getName());
             stmt.setString(2, utilizador.getUsername());
-            stmt.setString(3, utilizador.getPassword());
-            stmt.setString(4, utilizador.getEmail());
-            stmt.setString(5, utilizador.getType());
+            stmt.setString(3, hashedPassword);
+            stmt.setString(4, "ativo");
+            stmt.setString(5, utilizador.getEmail());
+            stmt.setString(6, utilizador.getType());
+
+            int rowsInserted = stmt.executeUpdate();
+            return rowsInserted > 0;
 
         } catch (SQLException e) {
             System.err.println("\033[31mErro ao inserir utilizador: \033[0m" + e.getMessage());
+            return false;
         }
-        return false;
     }
 
     public boolean atribuirLicenca(int licensa_atribuir, int certificacao_atribuir){
@@ -1077,14 +1087,16 @@ public class DBController {
      * @param fabricante
      * @return true or false
      */
-    public boolean inserirFabricante(Fabricante fabricante) {
+    public boolean inserirFabricante(Fabricante fabricante){
         String sql = "INSERT INTO utilizadores (nome, username, password, email, tipo, nif, telefone, morada, sector_comercial, data_inicio) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id";
+
+        String hashedPassword = hashPassword(fabricante.getPassword());
 
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setString(1, fabricante.getName());
             stmt.setString(2, fabricante.getUsername());
-            stmt.setString(3, fabricante.getPassword());
+            stmt.setString(3, hashedPassword);
             stmt.setString(4, fabricante.getEmail());
             stmt.setString(5, fabricante.getType());
             stmt.setString(6, fabricante.getNif());
@@ -1113,10 +1125,11 @@ public class DBController {
     public boolean inserirTecnico(Tecnico tecnico){
         String sql = "INSERT INTO utilizadores (nome, username, password, email, tipo, nif, telefone, morada, area_especializacao, nivel_certificacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
+        String hashedPassword = hashPassword(tecnico.getPassword());
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setString(1, tecnico.getName());
             stmt.setString(2, tecnico.getUsername());
-            stmt.setString(3, tecnico.getPassword());
+            stmt.setString(3, hashedPassword);
             stmt.setString(4, tecnico.getEmail());
             stmt.setString(5, tecnico.getType());
             stmt.setString(6, tecnico.getNif());

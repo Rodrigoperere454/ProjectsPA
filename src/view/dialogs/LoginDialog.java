@@ -1,6 +1,9 @@
 package view.dialogs;
+
 import controller.*;
 import model.Utilizador;
+import view.frames.InicialMenuFrame;
+import view.frames.TechMenuFrame;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -17,10 +20,13 @@ public class LoginDialog extends JDialog implements ActionListener {
     private JButton botao_cancelar;
     private JTextField field_username;
     private JTextField field_password;
+    private JFrame parentFrame;
+
 
     public LoginDialog(JFrame parent) {
         super(parent, "Login", true);
         setLayout(null);
+        this.parentFrame = parent;
         setSize(300, 200);
         setLocationRelativeTo(parent);
 
@@ -59,7 +65,17 @@ public class LoginDialog extends JDialog implements ActionListener {
             Utilizador utilizador = DB.loginUtilizador(username, password);
             if (utilizador != null) {
                 JOptionPane.showMessageDialog(this, "Login successful! Welcome " + utilizador.getUsername() + "!");
+                if (utilizador.getType().equalsIgnoreCase("tecnico")) {
+                    TechMenuFrame menuTech = new TechMenuFrame();
+                    menuTech.setVisible(true);
+                } else if (utilizador.getType().equalsIgnoreCase("fabricante")) {
+                    System.out.println(utilizador.getUsername());
+                } else {
+                    System.out.println(utilizador.getUsername());
+                }
                 dispose();
+                this.parentFrame.dispose();
+
             } else {
                 JOptionPane.showMessageDialog(this, "Login failed! Please check your username and password.", "Error", JOptionPane.ERROR_MESSAGE);
             }

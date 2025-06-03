@@ -1,6 +1,7 @@
 package view.frames;
 
 import view.dialogs.LoginDialog;
+import view.dialogs.RegistarDialog;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,6 +42,7 @@ public class InicialMenuFrame extends JFrame implements ActionListener {
         btn_registar.setMinimumSize(buttonSize);
         btn_registar.setAlignmentX(Component.CENTER_ALIGNMENT);
         btn_registar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btn_registar.addActionListener(this);
         cont.add(btn_registar);
         cont.add(Box.createRigidArea(new Dimension(0, 20)));
         btn_db = new JButton("Alterar Dados da Base de Dados");
@@ -49,6 +51,7 @@ public class InicialMenuFrame extends JFrame implements ActionListener {
         btn_db.setMinimumSize(buttonSize);
         btn_db.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btn_db.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btn_db.addActionListener(this);
         cont.add(btn_db);
 
     }
@@ -58,7 +61,8 @@ public class InicialMenuFrame extends JFrame implements ActionListener {
             LoginDialog loginDialog = new LoginDialog(this);
             loginDialog.setVisible(true);
         } else if (e.getSource() == btn_registar) {
-            System.out.println("Registar Utilizador clicked");
+            RegistarDialog registarDialog = new RegistarDialog(this);
+            registarDialog.setVisible(true);
         } else if (e.getSource() == btn_db) {
             System.out.println("Alterar Dados da Base de Dados clicked");
         }

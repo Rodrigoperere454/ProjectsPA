@@ -3,10 +3,12 @@ package view.dialogs;
 import controller.DBController;
 import controller.DBconfig;
 import model.*;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class TypeRegistar extends JDialog implements ActionListener {
 
@@ -65,7 +67,7 @@ public class TypeRegistar extends JDialog implements ActionListener {
         field_email.setBounds(120, 140, 200, 25);
         add(field_email);
 
-        if(type.equals("tecnico") || type.equals("fabricante")) {
+        if (type.equalsIgnoreCase("tecnico") || type.equalsIgnoreCase("fabricante")) {
             JLabel label_nif = new JLabel("NIF:");
             label_nif.setBounds(20, 180, 80, 25);
             add(label_nif);
@@ -91,7 +93,7 @@ public class TypeRegistar extends JDialog implements ActionListener {
             add(field_morada);
         }
 
-        if(type.equals("fabricante")) {
+        if (type.equalsIgnoreCase("fabricante")) {
             JLabel label_sector_comercial = new JLabel("Sector Comercial:");
             label_sector_comercial.setBounds(20, 300, 120, 25);
             add(label_sector_comercial);
@@ -101,7 +103,7 @@ public class TypeRegistar extends JDialog implements ActionListener {
             add(field_sector_comercial);
         }
 
-        if(type.equals("tecnico")){
+        if (type.equalsIgnoreCase("tecnico")) {
             JLabel label_area_especializacao = new JLabel("Área Especialização:");
             label_area_especializacao.setBounds(20, 300, 120, 25);
             add(label_area_especializacao);
@@ -134,8 +136,9 @@ public class TypeRegistar extends JDialog implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == botao_registar) {
-            if(field_type.getText().equals("tecnico")) {
+        if (e.getSource() == botao_registar) {
+            System.out.println(field_type.getText());
+            if (field_type.getText().equalsIgnoreCase("tecnico")) {
                 String nome = field_nome.getText();
                 String username = field_username.getText();
                 String password = field_password.getText();
@@ -147,8 +150,14 @@ public class TypeRegistar extends JDialog implements ActionListener {
                 int nivel_certificacao = Integer.parseInt(field_nivel_certificacao.getText());
 
                 Tecnico tecnico = new Tecnico(nome, username, password, email, "tecnico", nif, telefone, morada, area_especializacao, nivel_certificacao);
-                DB.inserirTecnico(tecnico);
-            } else if(field_type.getText().equals("fabricante")) {
+                boolean sucesso_inserirTecnico = DB.inserirTecnico(tecnico);
+                if (sucesso_inserirTecnico) {
+                    JOptionPane.showMessageDialog(this, "Técnico registado com sucesso!");
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Erro ao registar Técnico.");
+                }
+            } else if (field_type.getText().equalsIgnoreCase("fabricante")) {
                 String nome = field_nome.getText();
                 String username = field_username.getText();
                 String password = field_password.getText();
@@ -159,16 +168,28 @@ public class TypeRegistar extends JDialog implements ActionListener {
                 String sector_comercial = field_sector_comercial.getText();
 
                 Fabricante fabricante = new Fabricante(nome, username, password, email, "fabricante", nif, telefone, morada, sector_comercial, java.time.LocalDate.now());
-                DB.inserirFabricante(fabricante);
+                boolean secesso_inserirFabricante = DB.inserirFabricante(fabricante);
+                if (secesso_inserirFabricante) {
+                    JOptionPane.showMessageDialog(this, "Fabricante registado com sucesso!");
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Erro ao registar Fabricante.");
+                }
             } else {
+                System.out.println("Inserir Gestor");
                 String nome = field_nome.getText();
                 String username = field_username.getText();
                 String password = field_password.getText();
                 String email = field_email.getText();
 
                 Utilizador gestor = new Utilizador(nome, username, password, email, "gestor");
-
-                DB.inserirUtilizador(gestor);
+                boolean inserir_sucessoUtilizador = DB.inserirUtilizador(gestor);
+                if (inserir_sucessoUtilizador) {
+                    JOptionPane.showMessageDialog(this, "Gestor registado com sucesso!");
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Erro ao registar Gestor.");
+                }
             }
         }
 
