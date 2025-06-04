@@ -6,6 +6,9 @@ import model.Tecnico;
 import model.Certificacao;
 import model.Teste;
 import model.Log;
+import model.Notificacao;
+
+import java.sql.Timestamp;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,6 +20,8 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Random;
 
@@ -187,30 +192,66 @@ public class DBController {
         }
     }
 
-
     /**
      * Função para listar todas as notificações por determiados encarregados
      * @param encarregado
      */
-    public void listarNotificacoes(String encarregado) {
+    public Notificacao[] listarNotificacoes(String encarregado) {
+        List<Notificacao> notificacoes = new ArrayList<>();
         String sql = "SELECT * FROM notificacoes WHERE encarregado = ?";
-        System.out.println("NOTIFICAÇÕES PARA: " + encarregado);
+
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setString(1, encarregado);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    System.out.println("--------------------------------------------------------------------------------------------------");
-                    System.out.println("ID do Utilizador: " + rs.getInt("id_utilizador") +
-                            " - " + rs.getString("tipo") +
-                            " " + rs.getTimestamp("data_hora") +
-                            " Descrição: " + rs.getString("descricao"));
+                    Notificacao notificacao = new Notificacao(
+                            rs.getTimestamp("data_hora"),
+                            rs.getInt("id_utilizador"),
+                            rs.getString("descricao"),
+                            rs.getString("tipo"),
+                            rs.getString("encarregado"),
+                            rs.getBoolean("lida")
+                    );
+                    notificacoes.add(notificacao);
                 }
             }
         } catch (Exception e) {
             System.out.println("\033[31mErro ao listar notificações: \033[0m" + e.getMessage());
         }
+
+        return notificacoes.toArray(new Notificacao[0]);
     }
+
+    public int NotificacoesPorler(String encarregado) {
+        String sql = "SELECT COUNT(*) FROM notificacoes WHERE encarregado = ? AND lida = false";
+        int porLer = 0;
+
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setString(1, encarregado);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                porLer = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao ler notificações: " + e.getMessage());
+        }
+
+        return porLer;
+    }
+
+    public void lerNotificacoes(String encarregado) {
+        String sql = "UPDATE notificacoes SET lida = true WHERE encarregado = ?";
+
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setString(1, encarregado);
+            stmt.executeUpdate();
+            System.out.println("Notificações marcadas como lidas.");
+        } catch (SQLException e) {
+            System.err.println("Erro ao marcar notificações como lidas: " + e.getMessage());
+        }
+    }
+
 
     /**
      * Função para listar todas as notificações por determiados encarregados e id do técnico
