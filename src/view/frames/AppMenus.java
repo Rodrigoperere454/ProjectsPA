@@ -1,4 +1,4 @@
-package view.Frames;
+package view.frames;
 
 public class AppMenus {
 

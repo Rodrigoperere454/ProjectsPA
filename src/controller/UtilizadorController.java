@@ -7,7 +7,7 @@ import model.Equipamento;
 import model.Certificacao;
 import model.Teste;
 import model.Log;
-import view.Frames.AppMenus;
+import view.frames.AppMenus;
 
 import java.io.IOException;
 import java.sql.Connection;
