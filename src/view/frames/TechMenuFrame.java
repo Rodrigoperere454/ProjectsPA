@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import view.panels.*;
 
 public class TechMenuFrame extends JFrame implements ActionListener {
 
@@ -51,54 +52,37 @@ public class TechMenuFrame extends JFrame implements ActionListener {
         for (int i = 0; i < botoes.length; i++) { // Itera sobre os botões
             if (source == botoes[i]) { // Verifica qual botão foi pressionado
                 switch (i) {
-                    case 0: registarTecnico(); break;
-                    case 1: verNotificacoes(); break;
-                    case 2: removerConta(); break;
-                    case 3: verCertificacoes(); break;
-                    case 4: inspecionarEquipamento(); break;
-                    case 5: aceitarNegarCertificacao(); break;
-                    case 6: alterarInformacoes(); break;
-                    case 7: cancelarCertificacao(); break;
-                    case 8: fechar(); break;
+                    case 0:
+                        TechPanel registarPanel = new TechPanel("registar");
+                        this.setContentPane(registarPanel);
+                        this.revalidate();
+                        this.repaint();
+                        break;
+                    case 1:
+
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                    case 6:
+                        break;
+                    case 7:
+                        break;
+                    case 8:
+                        back();
+                        break;
                 }
                 break;
             }
         }
     }
 
-    private void registarTecnico() {
-        JOptionPane.showMessageDialog(this, "Perguica.");
-    }
-
-    private void verNotificacoes() {
-        JOptionPane.showMessageDialog(this, "Perguica.");
-    }
-
-    private void removerConta() {
-        JOptionPane.showMessageDialog(this, "Perguica.");
-    }
-
-    private void verCertificacoes() {
-        JOptionPane.showMessageDialog(this, "Perguica.");
-    }
-
-    private void inspecionarEquipamento() {
-        JOptionPane.showMessageDialog(this, "Perguica.");
-    }
-
-    private void aceitarNegarCertificacao() {
-        JOptionPane.showMessageDialog(this, "Perguica.");
-    }
-
-    private void alterarInformacoes() {
-        JOptionPane.showMessageDialog(this, "Perguica.");
-    }
-
-    private void cancelarCertificacao() {
-        JOptionPane.showMessageDialog(this, "Perguica.");
-    }
-
-    private void fechar() {
+    private void back() {
         dispose();
     }
 }
