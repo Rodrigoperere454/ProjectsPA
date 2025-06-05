@@ -2,6 +2,7 @@ package view.frames;
 
 import controller.DBController;
 import controller.DBconfig;
+import view.dialogs.TypeRegistar;
 import view.panels.GestorPanel;
 import javax.swing.*;
 import java.awt.*;
@@ -69,15 +70,13 @@ public class AdminMenuFrame extends JFrame implements ActionListener {
             if (source == botoes[i]) {
                 switch (i) {
                     case 0:
-                        GestorPanel registarPanel= new GestorPanel("registar");
-                        this.setContentPane(registarPanel);
-                        this.revalidate();
-                        this.repaint();
+                        TypeRegistar registarGestor = new TypeRegistar("gestor");
+                        registarGestor.setVisible(true);
                         break;
                     case 1:  break;
                     case 2:  break;
                     case 3:
-                        GestorPanel notificationsPanel= new GestorPanel("notificacao");
+                        GestorPanel notificationsPanel= new GestorPanel("notificacao", this);
                         this.setContentPane(notificationsPanel);
                         this.revalidate();
                         this.repaint();
@@ -88,7 +87,7 @@ public class AdminMenuFrame extends JFrame implements ActionListener {
                     case 5:  break;
                     case 6:  break;
                     case 7:
-                        GestorPanel aceitarPanel = new GestorPanel("aceitar");
+                        GestorPanel aceitarPanel = new GestorPanel("aceitar", this);
                         this.setContentPane(aceitarPanel);
                         this.revalidate();
                         this.repaint();

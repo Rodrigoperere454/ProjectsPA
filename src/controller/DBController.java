@@ -488,6 +488,19 @@ public class DBController {
         }
     }
 
+    public boolean desativarUtilizador(int user_id){
+        String sql = "UPDATE utilizadores SET estado = 'desativo' WHERE id = ?";
+
+        try(PreparedStatement stmt = conexao.prepareStatement(sql)){
+            stmt.setInt(1, user_id);
+            int linhasAfetadas = stmt.executeUpdate();
+            return linhasAfetadas > 0;
+        } catch (SQLException e) {
+            System.err.println("\033[31mErro ao ativar utilizador: \033[0m" + e.getMessage());
+            return false;
+        }
+    }
+
 
     /**
      * Função para pesquisar por equipamentos por marca ou número de modelo. Recebe uma string com a informação a pesquisar e faz a query na base de dados.

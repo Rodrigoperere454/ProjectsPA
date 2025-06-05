@@ -1,5 +1,6 @@
 package view.panels;
 
+import controller.DBconfig;
 import model.Notificacao;
 import controller.DBController;
 import model.Utilizador;
@@ -7,12 +8,15 @@ import model.Utilizador;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 
 public class TechPanel extends JPanel implements ActionListener {
 
-    private DBController DB;
     private CardLayout cardLayout;
     private JPanel mainPanel;
+
+    Connection conexao = DBconfig.getConnection();
+    DBController DB = new DBController(conexao);
 
     public TechPanel(String order, CardLayout cardLayout, JPanel mainPanel) {
         this.cardLayout = cardLayout;
@@ -21,7 +25,7 @@ public class TechPanel extends JPanel implements ActionListener {
 
         switch (order) {
             case "notificacoes":
-                Notificacao[] notificacoes = DB.listarNotificacoes("tecnicos");
+                Notificacao[] notificacoes = DB.listarNotificacoes("Técnicos");
                 String[] columns = {"ID", "Tipo", "Mensagem", "Data", "Lida"};
                 Object[][] data = new Object[notificacoes.length][columns.length];
                 for (int i = 0; i < notificacoes.length; i++) {

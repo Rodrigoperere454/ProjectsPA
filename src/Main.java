@@ -12,17 +12,17 @@ public class Main {
      * @param args
      */
     public static void main(String[] args) throws Exception {
-        /*InicialMenuFrame menuInicial = new InicialMenuFrame();
+        InicialMenuFrame menuInicial = new InicialMenuFrame();
         menuInicial.setSize(400, 400);
-        menuInicial.setVisible(true);*/
+        menuInicial.setVisible(true);
 
         /*TechMenuFrame techMenuFrame = new TechMenuFrame();
         techMenuFrame.setSize(400, 500);
         techMenuFrame.setVisible(true);*/
 
-        AdminMenuFrame adminMenuFrame = new AdminMenuFrame();
+        /*AdminMenuFrame adminMenuFrame = new AdminMenuFrame();
         adminMenuFrame.setSize(400, 580);
-        adminMenuFrame.setVisible(true);
+        adminMenuFrame.setVisible(true);*/
 
         Connection connection = null;
 
