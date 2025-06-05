@@ -7,19 +7,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class FabMenuFrame extends JFrame implements ActionListener {
+    private CardLayout cardLayout;
+    private JPanel mainPanel;
     private JButton[] botoes = new JButton[11];
     private String[] labels = {
-            "1 - Registar Fabricante",
-            "2 - Adicionar Equipamento",
-            "3 - Pedir Certificação",
-            "4 - Listar Equipamentos",
-            "5 - Listar Pedidos Feitos",
-            "6 - Pesquisar Equipamentos",
-            "7 - Pesquisar Pedidos Certificação",
-            "8 - Ver Estado de uma Certificação",
-            "9 - Remover Conta",
-            "10 - Alterar Minhas Infos",
-            "0 - Sair"
+            "Registar Fabricante",
+            "Adicionar Equipamento",
+            "Pedir Certificação",
+            "Listar Equipamentos",
+            "Listar Pedidos Feitos",
+            "Pesquisar Equipamentos",
+            "Pesquisar Pedidos Certificação",
+            "Ver Estado de uma Certificação",
+            "Remover Conta",
+            "Alterar Minhas Infos",
+            "Logout"
     };
 
     public FabMenuFrame() {
@@ -27,14 +29,20 @@ public class FabMenuFrame extends JFrame implements ActionListener {
         setSize(400, 600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+
+        cardLayout = new CardLayout();
+        mainPanel = new JPanel(cardLayout);
+
+        // Painel de menu principal
+        JPanel menuPanel = new JPanel();
+        menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
 
         JLabel titulo = new JLabel("Menu Fabricante");
         titulo.setFont(new Font("Arial", Font.BOLD, 22));
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(Box.createVerticalStrut(20));
-        add(titulo);
-        add(Box.createVerticalStrut(20));
+        menuPanel.add(Box.createVerticalStrut(20));
+        menuPanel.add(titulo);
+        menuPanel.add(Box.createVerticalStrut(20));
 
         for (int i = 0; i < labels.length; i++) {
             botoes[i] = new JButton(labels[i]);
@@ -44,6 +52,10 @@ public class FabMenuFrame extends JFrame implements ActionListener {
             add(botoes[i]);
             add(Box.createVerticalStrut(10));
         }
+
+        mainPanel.add(menuPanel, "menu");
+        setContentPane(mainPanel);
+        setVisible(true);
     }
 
     @Override
@@ -56,8 +68,10 @@ public class FabMenuFrame extends JFrame implements ActionListener {
                     case 0:
                         TypeRegistar registarDialog = new TypeRegistar("fabricante");
                         registarDialog.setVisible(true);
-                    break;
-                    case 1: adicionarEquipamento(); break;
+                        break;
+                    case 1:
+
+                        break;
                     case 2: pedirCertificacao(); break;
                     case 3: listarEquipamentos(); break;
                     case 4: listarPedidosFeitos(); break;
@@ -66,7 +80,13 @@ public class FabMenuFrame extends JFrame implements ActionListener {
                     case 7: verEstadoCertificacao(); break;
                     case 8: removerConta(); break;
                     case 9: alterarMinhasInfos(); break;
-                    case 10: sair(); break;
+                    case 10:
+                        int response = JOptionPane.showConfirmDialog(this, "Tem a certeza que deseja fazer logout?", "Logout", JOptionPane.YES_NO_OPTION);
+                        if (response == JOptionPane.YES_OPTION) {
+                            dispose();
+                            new InicialMenuFrame().setVisible(true);
+                        }
+                        break;
                 }
             }
         }

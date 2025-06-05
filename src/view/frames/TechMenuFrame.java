@@ -81,7 +81,7 @@ public class TechMenuFrame extends JFrame implements ActionListener {
                         cardLayout.show(mainPanel, "rem_conta");
                         break;
                     case 8:
-                        int response = JOptionPane.showConfirmDialog(this, "Deseja realmente sair?", "Logout", JOptionPane.YES_NO_OPTION);
+                        int response = JOptionPane.showConfirmDialog(this, "Tem a certeza que deseja fazer logout?", "Logout", JOptionPane.YES_NO_OPTION);
                         if (response == JOptionPane.YES_OPTION) {
                             dispose();
                             new InicialMenuFrame().setVisible(true);
