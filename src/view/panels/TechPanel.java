@@ -1,58 +1,66 @@
 package view.panels;
 
+import model.Notificacao;
+import controller.DBController;
+import model.Utilizador;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class TechPanel extends JPanel implements ActionListener {
-    public TechPanel(String order) {
+
+    private DBController DB;
+    private CardLayout cardLayout;
+    private JPanel mainPanel;
+
+    public TechPanel(String order, CardLayout cardLayout, JPanel mainPanel) {
+        this.cardLayout = cardLayout;
+        this.mainPanel = mainPanel;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
         switch (order) {
-            case "registar":
-                JPanel registarPanel = new JPanel();
-                registarPanel.setLayout(null); // desativa o layout automático
-                registarPanel.setPreferredSize(new Dimension(400, 500));
-
-                JLabel label_registar = new JLabel("Registar Técnico");
-                label_registar.setBounds(120, 10, 200, 30);
-                label_registar.setFont(label_registar.getFont().deriveFont(18f));
-                registarPanel.add(label_registar);
-
-                JLabel label_nome = new JLabel("Nome:");
-                label_nome.setBounds(20, 60, 80, 25);
-                registarPanel.add(label_nome);
-
-                JTextField field_nome = new JTextField();
-                field_nome.setBounds(120, 60, 200, 25);
-                registarPanel.add(field_nome);
-
-                JLabel label_username = new JLabel("Username:");
-                label_username.setBounds(20, 100, 80, 25);
-                registarPanel.add(label_username);
-
-                JTextField field_username = new JTextField();
-                field_username.setBounds(120, 100, 200, 25);
-                registarPanel.add(field_username);
-
-                JLabel label_password = new JLabel("Password:");
-                label_password.setBounds(20, 140, 80, 25);
-                registarPanel.add(label_password);
-
-                JTextField field_password = new JTextField();
-                field_password.setBounds(120, 140, 200, 25);
-                registarPanel.add(field_password);
-
-                JLabel label_email = new JLabel("Email:");
-                label_email.setBounds(20, 180, 80, 25);
-                registarPanel.add(label_email);
-
-                JTextField field_email = new JTextField();
-                field_email.setBounds(120, 180, 200, 25);
-                registarPanel.add(field_email);
-                break;
             case "notificacoes":
+                Notificacao[] notificacoes = DB.listarNotificacoes("tecnicos");
+                String[] columns = {"ID", "Tipo", "Mensagem", "Data", "Lida"};
+                Object[][] data = new Object[notificacoes.length][columns.length];
+                for (int i = 0; i < notificacoes.length; i++) {
+                    data[i][0] = notificacoes[i].getIdUtilizador();
+                    data[i][1] = notificacoes[i].getTipo();
+                    data[i][2] = notificacoes[i].getDescricao();
+                    data[i][3] = notificacoes[i].getDataHora();
+                    data[i][4] = notificacoes[i].isLida() ? "Sim" : "Não";
+                }
+
+                JTable table = new JTable(data, columns);
+                JScrollPane scrollPane = new JScrollPane(table);
+                scrollPane.setPreferredSize(new Dimension(500, 300));
+                add(scrollPane);
+
+                JButton voltarButton = new JButton("Voltar");
+                voltarButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+                voltarButton.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
+                add(Box.createVerticalStrut(20));
+                add(voltarButton);
                 break;
             case "rem_conta":
+                JLabel label_remover = new JLabel("Remover Conta");
+                label_remover.setAlignmentX(Component.CENTER_ALIGNMENT);
+                add(label_remover);
+                Utilizador[] utilizadores = DB.listarUtilizadoresInterface();
+                String[] columnNames = {"ID", "Nome", "Username", "Email", "Tipo", "Estado", "Remover"};
+                Object[][] dataRemover = new Object[utilizadores.length][columnNames.length];
+                for (int i = 0; i < utilizadores.length; i++) {
+                    dataRemover[i][0] = utilizadores[i].getId();
+                    dataRemover[i][1] = utilizadores[i].getName();
+                    dataRemover[i][2] = utilizadores[i].getUsername();
+                    dataRemover[i][3] = utilizadores[i].getEmail();
+                    dataRemover[i][4] = utilizadores[i].getType();
+                    dataRemover[i][5] = utilizadores[i].getEstado();
+                    dataRemover[i][6] = "Remover";
+                };
+
+                JButton botao_remover = new JButton("Remover Conta");
                 break;
             case "ver_not":
                 break;
@@ -64,7 +72,7 @@ public class TechPanel extends JPanel implements ActionListener {
                 break;
             case "cancel_cert":
                 break;
-            case "":
+            case "logout":
                 break;
         }
     }

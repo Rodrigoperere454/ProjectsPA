@@ -4,86 +4,93 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import view.dialogs.TypeRegistar;
 import view.panels.*;
 
 public class TechMenuFrame extends JFrame implements ActionListener {
 
-    private JButton[] botoes = new JButton[9]; // Array para os botões do menu
+    private CardLayout cardLayout;
+    private JPanel mainPanel;
+    private JButton[] botoes = new JButton[9];
     private String[] labels = {
-            "1 - Registar Técnico",
-            "2 - Ver Notificações",
-            "3 - Remover Conta",
-            "4 - Ver Certificações",
-            "5 - Inspecionar Equipamento",
-            "6 - Aceitar/Negar Certificação",
-            "7 - Alterar Minhas Infos",
-            "8 - Cancelar Certificação",
-            "0 - Sair"
-    }; // array de labels para os botões
+            "Registar Técnico",
+            "Ver Notificações",
+            "Remover Conta",
+            "Ver Certificações",
+            "Inspecionar Equipamento",
+            "Aceitar/Negar Certificação",
+            "Alterar Minhas Infos",
+            "Cancelar Certificação",
+            "Logout"
+    };
 
     public TechMenuFrame() {
         setTitle("Menu Técnico");
-        setSize(400, 500);
+        setSize(600, 500);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+
+        cardLayout = new CardLayout();
+        mainPanel = new JPanel(cardLayout);
+
+        // Painel de menu principal
+        JPanel menuPanel = new JPanel();
+        menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
 
         JLabel titulo = new JLabel("Menu Técnico");
         titulo.setFont(new Font("Arial", Font.BOLD, 22));
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(Box.createVerticalStrut(20));
-        add(titulo);
-        add(Box.createVerticalStrut(20));
+        menuPanel.add(Box.createVerticalStrut(20));
+        menuPanel.add(titulo);
+        menuPanel.add(Box.createVerticalStrut(20));
 
-        for (int i = 0; i < labels.length; i++) { // Itera sobre os labels
-            botoes[i] = new JButton(labels[i]); // Cria um botão para cada label
-            botoes[i].setAlignmentX(Component.CENTER_ALIGNMENT); // Alinha o botão ao centro
-            botoes[i].setMaximumSize(new Dimension(300, 40)); // Define o tamanho máximo do botão
-            botoes[i].addActionListener(this); // Adiciona o ActionListener para cada botão
-            add(botoes[i]); // Adiciona o botão ao frame
-            add(Box.createVerticalStrut(10)); // Espaço entre os botões
+        for (int i = 0; i < labels.length; i++) {
+            botoes[i] = new JButton(labels[i]);
+            botoes[i].setAlignmentX(Component.CENTER_ALIGNMENT);
+            botoes[i].setMaximumSize(new Dimension(300, 40));
+            botoes[i].addActionListener(this);
+            menuPanel.add(botoes[i]);
+            menuPanel.add(Box.createVerticalStrut(10));
         }
+
+        mainPanel.add(menuPanel, "menu");
+
+        setContentPane(mainPanel);
+        setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Object source = e.getSource(); // Obtém o objeto que disparou o evento
+        Object source = e.getSource();
 
-        for (int i = 0; i < botoes.length; i++) { // Itera sobre os botões
-            if (source == botoes[i]) { // Verifica qual botão foi pressionado
+        for (int i = 0; i < botoes.length; i++) {
+            if (source == botoes[i]) {
                 switch (i) {
                     case 0:
-                        TechPanel registarPanel = new TechPanel("registar");
-                        this.setContentPane(registarPanel);
-                        this.revalidate();
-                        this.repaint();
+                        TypeRegistar registarDialog = new TypeRegistar("tecnico");
+                        registarDialog.setVisible(true);
                         break;
                     case 1:
-
+                        TechPanel notificacoesPanel = new TechPanel("notificacoes", cardLayout, mainPanel);
+                        mainPanel.add(notificacoesPanel, "notificacoes");
+                        cardLayout.show(mainPanel, "notificacoes");
                         break;
                     case 2:
-                        break;
-                    case 3:
-                        break;
-                    case 4:
-                        break;
-                    case 5:
-                        break;
-                    case 6:
-                        break;
-                    case 7:
+                        TechPanel removerContaPanel = new TechPanel("rem_conta", cardLayout, mainPanel);
+                        mainPanel.add(removerContaPanel, "rem_conta");
+                        cardLayout.show(mainPanel, "rem_conta");
                         break;
                     case 8:
-                        back();
+                        int response = JOptionPane.showConfirmDialog(this, "Deseja realmente sair?", "Logout", JOptionPane.YES_NO_OPTION);
+                        if (response == JOptionPane.YES_OPTION) {
+                            dispose();
+                            new InicialMenuFrame().setVisible(true);
+                        }
                         break;
                 }
-                break;
             }
         }
     }
-
-    private void back() {
-        dispose();
-    }
 }
+
 

@@ -1,5 +1,6 @@
 package view.frames;
 
+import view.dialogs.TypeRegistar;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -52,7 +53,10 @@ public class FabMenuFrame extends JFrame implements ActionListener {
         for (int i = 0; i < botoes.length; i++) {
             if (source == botoes[i]) {
                 switch (i) {
-                    case 0: registarFabricante(); break;
+                    case 0:
+                        TypeRegistar registarDialog = new TypeRegistar("fabricante");
+                        registarDialog.setVisible(true);
+                    break;
                     case 1: adicionarEquipamento(); break;
                     case 2: pedirCertificacao(); break;
                     case 3: listarEquipamentos(); break;
