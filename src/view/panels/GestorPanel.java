@@ -74,19 +74,52 @@ public class GestorPanel extends JPanel implements ActionListener {
 
                 break;
             case "notificacao":
+                DB.lerNotificacoes("Gestores");
                 JLabel label_notificacao = new JLabel("Notificações");
                 label_notificacao.setBounds(20, 0, 200, 25);
                 label_notificacao.setAlignmentX(Component.CENTER_ALIGNMENT);
                 add(label_notificacao);
 
 
-                DB.lerNotificacoes("Gestores");
                 Notificacao[] notificacoes = DB.listarNotificacoes("Gestores");
                 System.out.println(Arrays.toString(notificacoes));
                 JList lista_notificacoes = new JList(notificacoes);
-                add(lista_notificacoes);
+                lista_notificacoes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                lista_notificacoes.setLayoutOrientation(JList.VERTICAL);
+                lista_notificacoes.setVisibleRowCount(-1);
+                JScrollPane scrollPane = new JScrollPane(lista_notificacoes);
+                scrollPane.setPreferredSize(new Dimension(250, 80));
+                add(scrollPane);
+
 
                 break;
+            case "aceitar":
+                JLabel label_aceitar = new JLabel("Confirmacao de Registo de Contas");
+                label_aceitar.setBounds(20, 0, 200, 25);
+                label_aceitar.setAlignmentX(Component.CENTER_ALIGNMENT);
+                add(label_aceitar);
+
+                Utilizador[] utilizadores = DB.listarUtilizadoresInterface();
+                String[] columnNames = {"id", "Nome", "Username", "Email", "Tipo", "Estado", "Ativar"};
+                Object[][] data = new Object[utilizadores.length][7];
+                for (int i = 0; i < utilizadores.length; i++) {
+                    data[i][0] = utilizadores[i].getId();
+                    data[i][1] = utilizadores[i].getName();
+                    data[i][2] = utilizadores[i].getUsername();
+                    data[i][3] = utilizadores[i].getEmail();
+                    data[i][4] = utilizadores[i].getType();
+                    data[i][5] = utilizadores[i].getEstado();
+                    data[i][6] = "Ativar";
+                }
+
+                JTable table = new JTable(data, columnNames);
+                table.setPreferredScrollableViewportSize(new Dimension(500, 70));
+                table.setFillsViewportHeight(true);
+                JScrollPane scrollPaneAceitar = new JScrollPane(table);
+                add(scrollPaneAceitar);
+
+                break;
+
         }
     }
 

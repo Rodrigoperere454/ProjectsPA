@@ -223,6 +223,37 @@ public class DBController {
         return notificacoes.toArray(new Notificacao[0]);
     }
 
+    public Utilizador[] listarUtilizadoresInterface() {
+        List<Utilizador> utilizadores = new ArrayList<>();
+        String sql = "SELECT * FROM utilizadores";
+
+        try (PreparedStatement stmt = conexao.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                Utilizador utilizador = new Utilizador(
+                        rs.getInt("id"),
+                        rs.getString("nome"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("email"),
+                        rs.getString("tipo"),
+                        rs.getString("estado"),
+                        rs.getString("nif"),
+                        rs.getString("telefone"),
+                        rs.getString("morada"),
+                        rs.getString("sector_comercial"),
+                        rs.getString("area_especializacao"),
+                        rs.getInt("nivel_certificacao")
+                );
+                utilizadores.add(utilizador);
+            }
+        } catch (SQLException e) {
+            System.err.println("\033[31mErro ao listar utilizadores: \033[0m" + e.getMessage());
+        }
+        return utilizadores.toArray(new Utilizador[0]);
+    }
+
+
     public int NotificacoesPorler(String encarregado) {
         String sql = "SELECT COUNT(*) FROM notificacoes WHERE encarregado = ? AND lida = false";
         int porLer = 0;
