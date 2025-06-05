@@ -2,9 +2,9 @@ package view.dialogs;
 
 import controller.*;
 import model.Utilizador;
+import utils.Session;
 import view.frames.AdminMenuFrame;
 import view.frames.FabMenuFrame;
-import view.frames.InicialMenuFrame;
 import view.frames.TechMenuFrame;
 
 import javax.swing.*;
@@ -66,6 +66,7 @@ public class LoginDialog extends JDialog implements ActionListener {
             String password = field_password.getText();
             Utilizador utilizador = DB.loginUtilizador(username, password);
             if (utilizador != null) {
+                Session.setUtilizador(utilizador); // para manter e aceder ao utilizador logado em outras partes do programa
                 JOptionPane.showMessageDialog(this, "Login successful! Welcome " + utilizador.getUsername() + "!");
                 if (utilizador.getType().equalsIgnoreCase("tecnico")) {
                     TechMenuFrame menuTech = new TechMenuFrame();

@@ -48,23 +48,7 @@ public class TechPanel extends JPanel implements ActionListener {
                 add(voltarButton);
                 break;
             case "rem_conta":
-                JLabel label_remover = new JLabel("Remover Conta");
-                label_remover.setAlignmentX(Component.CENTER_ALIGNMENT);
-                add(label_remover);
-                Utilizador[] utilizadores = DB.listarUtilizadoresInterface();
-                String[] columnNames = {"ID", "Nome", "Username", "Email", "Tipo", "Estado", "Remover"};
-                Object[][] dataRemover = new Object[utilizadores.length][columnNames.length];
-                for (int i = 0; i < utilizadores.length; i++) {
-                    dataRemover[i][0] = utilizadores[i].getId();
-                    dataRemover[i][1] = utilizadores[i].getName();
-                    dataRemover[i][2] = utilizadores[i].getUsername();
-                    dataRemover[i][3] = utilizadores[i].getEmail();
-                    dataRemover[i][4] = utilizadores[i].getType();
-                    dataRemover[i][5] = utilizadores[i].getEstado();
-                    dataRemover[i][6] = "Remover";
-                };
 
-                JButton botao_remover = new JButton("Remover Conta");
                 break;
             case "ver_not":
                 break;
@@ -75,8 +59,6 @@ public class TechPanel extends JPanel implements ActionListener {
             case "alterar_info":
                 break;
             case "cancel_cert":
-                break;
-            case "logout":
                 break;
         }
     }

@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 
 public class InicialMenuFrame extends JFrame implements ActionListener {
     private Container cont;
@@ -19,7 +20,7 @@ public class InicialMenuFrame extends JFrame implements ActionListener {
         cont = getContentPane();
         cont.setLayout(new BoxLayout(cont, BoxLayout.Y_AXIS));
         Dimension buttonSize = new Dimension(200, 40);
-
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JLabel titulo = new JLabel("Menu Principal");
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
         titulo.setFont(new Font("Arial", Font.BOLD, 20));
@@ -54,8 +55,18 @@ public class InicialMenuFrame extends JFrame implements ActionListener {
         btn_db.addActionListener(this);
         cont.add(btn_db);
 
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                int response = JOptionPane.showConfirmDialog(InicialMenuFrame.this, "Tem a certeza que deseja sair?", "Sair", JOptionPane.YES_NO_OPTION);
+                if (response == JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                }
+            }
+        });
     }
 
+    @Override
     public void actionPerformed(ActionEvent e){
         if (e.getSource() == btn_login) {
             LoginDialog loginDialog = new LoginDialog(this);
@@ -66,6 +77,5 @@ public class InicialMenuFrame extends JFrame implements ActionListener {
         } else if (e.getSource() == btn_db) {
             System.out.println("Alterar Dados da Base de Dados clicked");
         }
-
     }
 }

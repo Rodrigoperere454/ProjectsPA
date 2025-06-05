@@ -4,10 +4,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+
+import controller.DBController;
+import controller.DBconfig;
+import model.Utilizador;
+import utils.Session;
 import view.dialogs.TypeRegistar;
 import view.panels.*;
 
 public class TechMenuFrame extends JFrame implements ActionListener {
+    private final Connection connection = DBconfig.getConnection();
+    private final DBController DB = new DBController(connection);
+
+    Utilizador loggedUser = Session.getUtilizador();
 
     private CardLayout cardLayout;
     private JPanel mainPanel;
@@ -76,13 +86,17 @@ public class TechMenuFrame extends JFrame implements ActionListener {
                         cardLayout.show(mainPanel, "notificacoes");
                         break;
                     case 2:
-                        TechPanel removerContaPanel = new TechPanel("rem_conta", cardLayout, mainPanel);
-                        mainPanel.add(removerContaPanel, "rem_conta");
-                        cardLayout.show(mainPanel, "rem_conta");
+                        int rem_conta = JOptionPane.showConfirmDialog(this, "Vai realizar um pedido de remoção de conta. Tem a certeza?", "Remover Conta", JOptionPane.YES_NO_OPTION);
+                        if (rem_conta == JOptionPane.YES_OPTION) {
+                            int id_user = loggedUser.getId();
+                            DB.enviarNotificacao(id_user, "remover conta", "tecnico", "Gestores");
+                            JOptionPane.showMessageDialog(this, "Pedido de remoção de conta enviado com sucesso!");
+                        }
                         break;
                     case 8:
                         int response = JOptionPane.showConfirmDialog(this, "Tem a certeza que deseja fazer logout?", "Logout", JOptionPane.YES_NO_OPTION);
                         if (response == JOptionPane.YES_OPTION) {
+                            Session.limparSessao();
                             dispose();
                             new InicialMenuFrame().setVisible(true);
                         }
