@@ -16,10 +16,7 @@ import java.util.Arrays;
 
 public class GestorPanel extends JPanel implements ActionListener {
 
-    private JTextField field_nome;
-    private JTextField field_username;
-    private JTextField field_password;
-    private JTextField field_email;
+
     private JButton botao_registar;
 
 
@@ -33,11 +30,11 @@ public class GestorPanel extends JPanel implements ActionListener {
 
         switch (order) {
             case "notificacao":
-                DB.lerNotificacoes("Gestores");
                 JLabel label_notificacao = new JLabel("Notificações");
                 label_notificacao.setBounds(20, 0, 200, 25);
                 label_notificacao.setAlignmentX(Component.CENTER_ALIGNMENT);
                 add(label_notificacao);
+                DB.lerNotificacoes("Gestores");
 
 
                 Notificacao[] notificacoes = DB.listarNotificacoes("Gestores");
@@ -155,20 +152,6 @@ public class GestorPanel extends JPanel implements ActionListener {
     }
 
     public void actionPerformed(java.awt.event.ActionEvent e) {
-        if (e.getSource().equals(botao_registar)) {
-            String nome = field_nome.getText();
-            String username = field_username.getText();
-            String password = field_password.getText();
-            String email = field_email.getText();
 
-            Utilizador gestor = new Utilizador(nome, username, password, email, "Gestor");
-            boolean sucesso = DB.inserirUtilizador(gestor);
-            if (sucesso) {
-                JOptionPane.showMessageDialog(this, "Gestor " + nome + " registrado com sucesso!");
-                return;
-            }
-            JOptionPane.showMessageDialog(this, "Erro ao registar Gestor. Verifique os dados inseridos.");
-
-        }
     }
 }

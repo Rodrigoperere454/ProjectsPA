@@ -38,6 +38,15 @@ public class Utilizador {
         this.area_especializacao = area_especializacao;
         this.nivel_certificacao = nivel_certificacao;
     }
+
+    public Utilizador(int id, String name, String username, String email, String type) {
+        this.id = id;
+        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.type = type;
+    }
+
     public int getId() {
         return id;
     }

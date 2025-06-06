@@ -1,5 +1,6 @@
 import controller.DBconfig;
 import controller.UtilizadorController;
+import view.frames.FabMenuFrame;
 import view.frames.InicialMenuFrame;
 import view.frames.TechMenuFrame;
 import view.frames.AdminMenuFrame;
@@ -23,6 +24,8 @@ public class Main {
         /*AdminMenuFrame adminMenuFrame = new AdminMenuFrame();
         adminMenuFrame.setSize(400, 580);
         adminMenuFrame.setVisible(true);*/
+
+
 
         Connection connection = null;
 

@@ -1,6 +1,9 @@
 package view.frames;
 
+import view.dialogs.InsertEquipDialog;
 import view.dialogs.TypeRegistar;
+import view.panels.FabPanel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -49,8 +52,8 @@ public class FabMenuFrame extends JFrame implements ActionListener {
             botoes[i].setAlignmentX(Component.CENTER_ALIGNMENT);
             botoes[i].setMaximumSize(new Dimension(300, 40));
             botoes[i].addActionListener(this);
-            add(botoes[i]);
-            add(Box.createVerticalStrut(10));
+            menuPanel.add(botoes[i]);
+            menuPanel.add(Box.createVerticalStrut(10));
         }
 
         mainPanel.add(menuPanel, "menu");
@@ -70,16 +73,27 @@ public class FabMenuFrame extends JFrame implements ActionListener {
                         registarDialog.setVisible(true);
                         break;
                     case 1:
-
+                        InsertEquipDialog inserir_equip = new InsertEquipDialog(this);
+                        inserir_equip.setVisible(true);
                         break;
-                    case 2: pedirCertificacao(); break;
-                    case 3: listarEquipamentos(); break;
-                    case 4: listarPedidosFeitos(); break;
-                    case 5: pesquisarEquipamentos(); break;
-                    case 6: pesquisarPedidosCertificacao(); break;
-                    case 7: verEstadoCertificacao(); break;
-                    case 8: removerConta(); break;
-                    case 9: alterarMinhasInfos(); break;
+                    case 2:
+                        FabPanel certeficarEquipamentosPanel = new FabPanel(this, "pedir_certi");
+                        this.setContentPane(certeficarEquipamentosPanel);
+                        this.revalidate();
+                        this.repaint();
+                        break;
+                    case 3:
+                        FabPanel listarEquipamentosPanel = new FabPanel(this, "listar_equip");
+                        this.setContentPane(listarEquipamentosPanel);
+                        this.revalidate();
+                        this.repaint();
+                        break;
+                    case 4:  break;
+                    case 5:  break;
+                    case 6:  break;
+                    case 7:  break;
+                    case 8: break;
+                    case 9: break;
                     case 10:
                         int response = JOptionPane.showConfirmDialog(this, "Tem a certeza que deseja fazer logout?", "Logout", JOptionPane.YES_NO_OPTION);
                         if (response == JOptionPane.YES_OPTION) {
@@ -90,49 +104,5 @@ public class FabMenuFrame extends JFrame implements ActionListener {
                 }
             }
         }
-    }
-
-    private void registarFabricante() {
-        // Implementar lógica para registar fabricante
-        System.out.println("Registar Fabricante");
-    }
-    private void adicionarEquipamento() {
-        // Implementar lógica para adicionar equipamento
-        System.out.println("Adicionar Equipamento");
-    }
-    private void pedirCertificacao() {
-        // Implementar lógica para pedir certificação
-        System.out.println("Pedir Certificação");
-    }
-    private void listarEquipamentos() {
-        // Implementar lógica para listar equipamentos
-        System.out.println("Listar Equipamentos");
-    }
-    private void listarPedidosFeitos() {
-        // Implementar lógica para listar pedidos feitos
-        System.out.println("Listar Pedidos Feitos");
-    }
-    private void pesquisarEquipamentos() {
-        // Implementar lógica para pesquisar equipamentos
-        System.out.println("Pesquisar Equipamentos");
-    }
-    private void pesquisarPedidosCertificacao() {
-        // Implementar lógica para pesquisar pedidos de certificação
-        System.out.println("Pesquisar Pedidos Certificação");
-    }
-    private void verEstadoCertificacao() {
-        // Implementar lógica para ver estado de uma certificação
-        System.out.println("Ver Estado de uma Certificação");
-    }
-    private void removerConta() {
-        // Implementar lógica para remover conta
-        System.out.println("Remover Conta");
-    }
-    private void alterarMinhasInfos() {
-        // Implementar lógica para alterar informações
-        System.out.println("Alterar Minhas Infos");
-    }
-    private void sair() {
-        dispose(); // Fecha o frame
     }
 }

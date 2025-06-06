@@ -85,6 +85,8 @@ public class LoginDialog extends JDialog implements ActionListener {
                 JOptionPane.showMessageDialog(this, "Login failed! Please check your username and password.", "Error", JOptionPane.ERROR_MESSAGE);
             }
             dispose();
+        }else if(e.getSource().equals(botao_cancelar)){
+            dispose();
         }
     }
 }

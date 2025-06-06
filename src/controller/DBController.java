@@ -253,6 +253,37 @@ public class DBController {
         return utilizadores.toArray(new Utilizador[0]);
     }
 
+    public Equipamento[] listarEquipamentosInterface(int id_fabricante) {
+        List<Equipamento> equipamentos = new ArrayList<>();
+        String sql = "SELECT * FROM equipamentos where id_fabricante = ?";
+
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)){
+             stmt.setInt(1, id_fabricante);
+             ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Equipamento equipamento = new Equipamento(
+                        rs.getInt("id_equipamento"),
+                        rs.getInt("id_fabricante"),
+                        rs.getString("marca"),
+                        rs.getString("modelo"),
+                        rs.getString("setor_comercial"),
+                        rs.getInt("potencia"),
+                        rs.getInt("amperagem"),
+                        rs.getInt("codigo_sku"),
+                        rs.getInt("numero_modelo"),
+                        rs.getString("data_submissao"),
+                        rs.getString("data_certeficacao")
+
+                );
+                equipamentos.add(equipamento);
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao Equipamentos: " + e.getMessage());
+        }
+        return equipamentos.toArray(new Equipamento[0]);
+    }
+
+
 
     public int NotificacoesPorler(String encarregado) {
         String sql = "SELECT COUNT(*) FROM notificacoes WHERE encarregado = ? AND lida = false";
@@ -449,6 +480,7 @@ public class DBController {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
+                int id = rs.getInt("id");
                 String nome = rs.getString("nome");
                 String email = rs.getString("email");
                 String tipo = rs.getString("tipo");
@@ -458,7 +490,7 @@ public class DBController {
                     System.out.println("\033[31mConta inativa. Por favor, contacte um gestor.\033[0m");
                     return null;
                 }
-                return new Utilizador(nome, username, hashedPassword, email, tipo);
+                return new Utilizador(id, nome, username, email, tipo);
 
             } else {
                 System.out.println("\033[31mDados inválidos! Username ou senha incorretos.\033[0m");
