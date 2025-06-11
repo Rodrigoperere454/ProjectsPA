@@ -149,13 +149,19 @@ public class TypeRegistar extends JDialog implements ActionListener {
                 String area_especializacao = field_area_especializacao.getText();
                 int nivel_certificacao = Integer.parseInt(field_nivel_certificacao.getText());
 
-                Tecnico tecnico = new Tecnico(nome, username, password, email, "tecnico", nif, telefone, morada, area_especializacao, nivel_certificacao);
-                boolean sucesso_inserirTecnico = DB.inserirTecnico(tecnico);
-                if (sucesso_inserirTecnico) {
-                    JOptionPane.showMessageDialog(this, "Técnico registado com sucesso!");
-                    dispose();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Erro ao registar Técnico.");
+                boolean exists = DB.alreadyExists(username, email);
+
+                if (exists) {
+                    JOptionPane.showMessageDialog(this, "Utilizador já existe.");
+                }else{
+                    Tecnico tecnico = new Tecnico(nome, username, password, email, "tecnico", nif, telefone, morada, area_especializacao, nivel_certificacao);
+                    boolean sucesso_inserirTecnico = DB.inserirTecnico(tecnico);
+                    if (sucesso_inserirTecnico) {
+                        JOptionPane.showMessageDialog(this, "Técnico registado com sucesso!");
+                        dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Erro ao registar Técnico.");
+                    }
                 }
             } else if (field_type.getText().equalsIgnoreCase("fabricante")) {
                 String nome = field_nome.getText();
@@ -167,13 +173,18 @@ public class TypeRegistar extends JDialog implements ActionListener {
                 String morada = field_morada.getText();
                 String sector_comercial = field_sector_comercial.getText();
 
-                Fabricante fabricante = new Fabricante(nome, username, password, email, "fabricante", nif, telefone, morada, sector_comercial, java.time.LocalDate.now());
-                boolean secesso_inserirFabricante = DB.inserirFabricante(fabricante);
-                if (secesso_inserirFabricante) {
-                    JOptionPane.showMessageDialog(this, "Fabricante registado com sucesso!");
-                    dispose();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Erro ao registar Fabricante.");
+                boolean exists = DB.alreadyExists(username, email);
+                if (exists) {
+                    JOptionPane.showMessageDialog(this, "Utilziador já existe.");
+                }else{
+                    Fabricante fabricante = new Fabricante(nome, username, password, email, "fabricante", nif, telefone, morada, sector_comercial, java.time.LocalDate.now());
+                    boolean secesso_inserirFabricante = DB.inserirFabricante(fabricante);
+                    if (secesso_inserirFabricante) {
+                        JOptionPane.showMessageDialog(this, "Fabricante registado com sucesso!");
+                        dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Erro ao registar Fabricante.");
+                    }
                 }
             } else {
                 System.out.println("Inserir Gestor");
@@ -182,14 +193,20 @@ public class TypeRegistar extends JDialog implements ActionListener {
                 String password = field_password.getText();
                 String email = field_email.getText();
 
-                Utilizador gestor = new Utilizador(nome, username, password, email, "gestor");
-                boolean inserir_sucessoUtilizador = DB.inserirUtilizador(gestor);
-                if (inserir_sucessoUtilizador) {
-                    JOptionPane.showMessageDialog(this, "Gestor registado com sucesso!");
-                    dispose();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Erro ao registar Gestor.");
+                boolean exists = DB.alreadyExists(username, email);
+                if (exists) {
+                    JOptionPane.showMessageDialog(this, "Utilizador já existe.");
+                }else {
+                    Utilizador gestor = new Utilizador(nome, username, password, email, "gestor");
+                    boolean inserir_sucessoUtilizador = DB.inserirUtilizador(gestor);
+                    if (inserir_sucessoUtilizador) {
+                        JOptionPane.showMessageDialog(this, "Gestor registado com sucesso!");
+                        dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Erro ao registar Gestor.");
+                    }
                 }
+
             }
         }
 

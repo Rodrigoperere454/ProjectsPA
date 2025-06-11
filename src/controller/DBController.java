@@ -1176,6 +1176,21 @@ public class DBController {
         }
     }
 
+    public boolean alreadyExists(String username, String email) {
+        String sql = "SELECT COUNT(*) FROM utilizadores WHERE username = ? OR email = ?";
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setString(1, username);
+            stmt.setString(2, email);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            System.err.println("\033[31mErro ao verificar existência de utilizador: \033[0m" + e.getMessage());
+        }
+        return false;
+    }
+
     /**
      * Função para remover um utilizador da base de dados. Recebe o id do utilizador e remove dos utilziadores assim como as suas notificações.
      * @param user_id
