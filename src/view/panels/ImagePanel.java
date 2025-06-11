@@ -11,10 +11,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.sql.Connection;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 
 public class ImagePanel extends JPanel {
-
+    private static final String IMAGE_FOLDER = "./public/imgs/user/profile/";
     private BufferedImage image;
     private final String username;
 
@@ -49,20 +51,35 @@ public class ImagePanel extends JPanel {
     }
 
     //
-    private void loadImage(String path) {
+    private void loadImage(String originalPath) {
         try {
-            image = ImageIO.read(new File(path));
+            // Define caminho de destino com nome baseado no username
+            String extension = originalPath.substring(originalPath.lastIndexOf("."));
+            String newFileName = username + extension;
+            String destinationPath = IMAGE_FOLDER + newFileName;
 
+            // Cria diretório se não existir
+            new File(IMAGE_FOLDER).mkdirs();
+
+            // Copia o ficheiro para a pasta destino
+            Files.copy(new File(originalPath).toPath(), new File(destinationPath).toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+            // Lê a imagem copiada
+            image = ImageIO.read(new File(destinationPath));
+
+            // Atualiza a base de dados com o novo caminho
             Connection connection = DBconfig.getConnection();
             DBController dbController = new DBController(connection);
-            dbController.insertUserImage(username, path); // Atualiza a imagem na BD
+            dbController.insertUserImage(username, destinationPath);
 
             repaint();
+
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Erro ao carregar nova imagem: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
+
 
 
     private void escolherNovaImagem() {

@@ -41,14 +41,14 @@ public class DBController {
             if (rs.next()) {
                 String imagem = rs.getString("imagem");
                 if (imagem == null || imagem.isEmpty()) {
-                    return "./public/imgs/default_profile_img.png"; // Caminho da imagem default
+                    return "./public/imgs/user/profile/default_profile_img.png"; // Devolve default se não existir imagem
                 }
                 return imagem;
             }
         } catch (SQLException e) {
             System.err.println("\033[31mErro ao obter imagem do utilizador: \033[0m" + e.getMessage());
         }
-        return "./public/imgs/default_profile_img.png"; // Devolve default em caso de erro ou se não existir o utilizador
+        return "./public/imgs/user/profile/default_profile_img.png"; // Devolve default em caso de erro ou se não existir o utilizador
     }
 
     public void insertUserImage(String username, String imagePath) {
