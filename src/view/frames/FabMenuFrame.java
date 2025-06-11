@@ -1,5 +1,6 @@
 package view.frames;
 
+import utils.Session;
 import view.dialogs.InsertEquipDialog;
 import view.dialogs.TypeRegistar;
 import view.panels.FabPanel;
@@ -10,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class FabMenuFrame extends JFrame implements ActionListener {
+
     private CardLayout cardLayout;
     private JPanel mainPanel;
     private JButton[] botoes = new JButton[11];
@@ -40,9 +42,15 @@ public class FabMenuFrame extends JFrame implements ActionListener {
         JPanel menuPanel = new JPanel();
         menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
 
+        JPanel imagePanel = new JPanel();
+        imagePanel.setLayout(new BorderLayout());
+
         JLabel titulo = new JLabel("Menu Fabricante");
+        JLabel welcomeMsg = new JLabel("Bem-vindo, " + Session.getUtilizador().getName() + "!");
         titulo.setFont(new Font("Arial", Font.BOLD, 22));
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        welcomeMsg.setFont(new Font("Arial", Font.ITALIC, 16));
+        welcomeMsg.setAlignmentX(Component.CENTER_ALIGNMENT);
         menuPanel.add(Box.createVerticalStrut(20));
         menuPanel.add(titulo);
         menuPanel.add(Box.createVerticalStrut(20));

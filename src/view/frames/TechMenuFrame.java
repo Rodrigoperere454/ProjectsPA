@@ -47,9 +47,26 @@ public class TechMenuFrame extends JFrame implements ActionListener {
         JPanel menuPanel = new JPanel();
         menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
 
+        // Adiciona um painel de imagem (pode ser usado para logo ou imagem do menu)
+        ImagePanel imagePanel = new ImagePanel(); // Usa o painel personalizado
+        imagePanel.setPreferredSize(new java.awt.Dimension(150, 150)); // Ajusta o tamanho conforme necessário
+        menuPanel.add(imagePanel);
+        menuPanel.add(Box.createVerticalStrut(20));
+
+        // click no ImagePanel
+        /*imagePanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JOptionPane.showMessageDialog(TechMenuFrame.this, "Imagem clicada!");
+            }
+        });*/
+
         JLabel titulo = new JLabel("Menu Técnico");
+        JLabel welcomeMsg = new JLabel("Bem-vindo, " + loggedUser.getName() + "!");
         titulo.setFont(new Font("Arial", Font.BOLD, 22));
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        welcomeMsg.setFont(new Font("Arial", Font.ITALIC, 16));
+        welcomeMsg.setAlignmentX(Component.CENTER_ALIGNMENT);
         menuPanel.add(Box.createVerticalStrut(20));
         menuPanel.add(titulo);
         menuPanel.add(Box.createVerticalStrut(20));

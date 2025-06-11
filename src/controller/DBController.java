@@ -33,6 +33,35 @@ public class DBController {
     }
 
 
+    public String getUserImage(String username) {
+        String sql = "SELECT imagem FROM utilizadores WHERE username = ?";
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                String imagem = rs.getString("imagem");
+                if (imagem == null || imagem.isEmpty()) {
+                    return "./public/imgs/default_profile_img.png"; // Caminho da imagem default
+                }
+                return imagem;
+            }
+        } catch (SQLException e) {
+            System.err.println("\033[31mErro ao obter imagem do utilizador: \033[0m" + e.getMessage());
+        }
+        return "./public/imgs/default_profile_img.png"; // Devolve default em caso de erro ou se não existir o utilizador
+    }
+
+    public void insertUserImage(String username, String imagePath) {
+        String sql = "UPDATE utilizadores SET imagem = ? WHERE username = ?";
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setString(1, imagePath);
+            stmt.setString(2, username);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("\033[31mErro ao inserir imagem do utilizador: \033[0m" + e.getMessage());
+        }
+    }
+
     /**
      * Função para adicionar um teste á base de dados. Este teste é executado por um técnino na hora de validar uma certificação.
      * @param teste
