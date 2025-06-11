@@ -73,7 +73,12 @@ public class AdminMenuFrame extends JFrame implements ActionListener {
                         TypeRegistar registarGestor = new TypeRegistar("gestor");
                         registarGestor.setVisible(true);
                         break;
-                    case 1:  break;
+                    case 1:
+                        GestorPanel listarUtilizadoresPanel = new GestorPanel("listar_utilizadores", this);
+                        this.setContentPane(listarUtilizadoresPanel);
+                        this.revalidate();
+                        this.repaint();
+                        break;
                     case 2:  break;
                     case 3:
                         GestorPanel notificationsPanel= new GestorPanel("notificacao", this);
@@ -94,7 +99,12 @@ public class AdminMenuFrame extends JFrame implements ActionListener {
                         break;
                     case 8:
 
-                    case 9:  break;
+                    case 9:
+                        GestorPanel aceitar_certe_panel = new GestorPanel("aceitar_certe", this);
+                        this.setContentPane(aceitar_certe_panel);
+                        this.revalidate();
+                        this.repaint();
+                        break;
                     case 10:  break;
                     case 11: break;
                     case 12:  break;

@@ -283,6 +283,68 @@ public class DBController {
         return equipamentos.toArray(new Equipamento[0]);
     }
 
+    public Equipamento[] listarEquipamentosInterfaceTech(int id_tech){
+        List<Equipamento> equipamentos = new ArrayList<>();
+        String sql = "SELECT equipamentos.* from equipamentos JOIN certificacoes ON  certificacoes.id_equipamento = equipamentos.id_equipamento\n" +
+                "WHERE certificacoes.id_tecnico = ?;";
+
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)){
+            stmt.setInt(1, id_tech);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Equipamento equipamento = new Equipamento(
+                        rs.getInt("id_equipamento"),
+                        rs.getInt("id_fabricante"),
+                        rs.getString("marca"),
+                        rs.getString("modelo"),
+                        rs.getString("setor_comercial"),
+                        rs.getInt("potencia"),
+                        rs.getInt("amperagem"),
+                        rs.getInt("codigo_sku"),
+                        rs.getInt("numero_modelo"),
+                        rs.getString("data_submissao"),
+                        rs.getString("data_certeficacao")
+
+                );
+                equipamentos.add(equipamento);
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao Equipamentos: " + e.getMessage());
+        }
+        return equipamentos.toArray(new Equipamento[0]);
+    }
+
+    public Equipamento[] listarEquipamentosInterfaceTechAccept(int id_tech){
+        List<Equipamento> equipamentos = new ArrayList<>();
+        String sql = "SELECT equipamentos.* from equipamentos JOIN certificacoes ON  certificacoes.id_equipamento = equipamentos.id_equipamento\n" +
+                "WHERE certificacoes.id_tecnico = ? AND certificacoes.estado = 'Aceite';";
+
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)){
+            stmt.setInt(1, id_tech);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Equipamento equipamento = new Equipamento(
+                        rs.getInt("id_equipamento"),
+                        rs.getInt("id_fabricante"),
+                        rs.getString("marca"),
+                        rs.getString("modelo"),
+                        rs.getString("setor_comercial"),
+                        rs.getInt("potencia"),
+                        rs.getInt("amperagem"),
+                        rs.getInt("codigo_sku"),
+                        rs.getInt("numero_modelo"),
+                        rs.getString("data_submissao"),
+                        rs.getString("data_certeficacao")
+
+                );
+                equipamentos.add(equipamento);
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao Equipamentos: " + e.getMessage());
+        }
+        return equipamentos.toArray(new Equipamento[0]);
+    }
+
 
 
     public int NotificacoesPorler(String encarregado) {
@@ -852,6 +914,33 @@ public class DBController {
         }
     }
 
+    public Certificacao[] listarCerteficacaoInterface(){
+        List<Certificacao> certificacoes = new ArrayList<>();
+        String sql = "SELECT * FROM certificacoes";
+
+        try (PreparedStatement stmt = conexao.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                Certificacao certificacao = new Certificacao(
+                        rs.getInt("id_certificacao"),
+                        rs.getInt("id_fabricante"),
+                        rs.getInt("id_equipamento"),
+                        rs.getInt("id_tecnico"),
+                        rs.getString("estado"),
+                        rs.getString("data_realizacao"),
+                        rs.getString("numero_certificacao"),
+                        rs.getString("numero_licenca"),
+                        rs.getInt("custo"),
+                        rs.getInt("tempo_decorrido")
+                );
+                certificacoes.add(certificacao);
+            }
+        } catch (SQLException e) {
+            System.err.println("\033[31mErro ao listar certificações: \033[0m" + e.getMessage());
+        }
+        return certificacoes.toArray(new Certificacao[0]);
+    }
+
 
     /**
      * Função para listar equipamentos de um determinado fabricante por ordem de marca ou de código SKU
@@ -1072,12 +1161,12 @@ public class DBController {
      * @param custo
      * @return true or false
      */
-    public boolean aceitarCerteficacaoTecnico(int id_equipamento, String estado, int custo){
+    public boolean aceitarCerteficacaoTecnico(int id_equipamento, String estado, double custo){
         String sql = "UPDATE certificacoes SET estado = ?, custo = ? WHERE id_equipamento = ?";
 
         try(PreparedStatement stmt = conexao.prepareStatement(sql)){
             stmt.setString(1, estado);
-            stmt.setInt(2, custo);
+            stmt.setDouble(2, custo);
             stmt.setInt(3, id_equipamento);
             int linhasAfetadas = stmt.executeUpdate();
             return linhasAfetadas > 0;

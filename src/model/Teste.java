@@ -44,4 +44,5 @@ public class Teste {
     public void setValor_medido(int valor_medido) {
         Valor_medido = valor_medido;
     }
+
 }

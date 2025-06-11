@@ -93,6 +93,17 @@ public class TechMenuFrame extends JFrame implements ActionListener {
                             JOptionPane.showMessageDialog(this, "Pedido de remoção de conta enviado com sucesso!");
                         }
                         break;
+
+                    case 4:
+                        TechPanel insp_equiPanel = new TechPanel("insp_equi", cardLayout, mainPanel);
+                        mainPanel.add(insp_equiPanel, "insp_equi");
+                        cardLayout.show(mainPanel, "insp_equi");
+                        break;
+                    case 5:
+                        TechPanel aceitarPanel = new TechPanel("aceitar_cert", cardLayout, mainPanel);
+                        mainPanel.add(aceitarPanel, "aceitar_cert");
+                        cardLayout.show(mainPanel, "aceitar_cert");
+                        break;
                     case 8:
                         int response = JOptionPane.showConfirmDialog(this, "Tem a certeza que deseja fazer logout?", "Logout", JOptionPane.YES_NO_OPTION);
                         if (response == JOptionPane.YES_OPTION) {
