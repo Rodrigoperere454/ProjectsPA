@@ -11,7 +11,7 @@ import java.awt.event.WindowAdapter;
 
 public class InicialMenuFrame extends JFrame implements ActionListener {
     private Container cont;
-    private JButton btn_login, btn_registar, btn_db;
+    private JButton btn_login, btn_registar, btn_db, btn_sair;
     private int width = getWidth();
     private int height = getHeight();
 
@@ -54,6 +54,22 @@ public class InicialMenuFrame extends JFrame implements ActionListener {
         btn_db.setAlignmentX(Component.CENTER_ALIGNMENT);
         btn_db.addActionListener(this);
         cont.add(btn_db);
+        cont.add(Box.createRigidArea(new Dimension(0, 20)));
+        btn_sair = new JButton("Sair");
+        btn_sair.setPreferredSize(buttonSize);
+        btn_sair.setMaximumSize(buttonSize);
+        btn_sair.setMinimumSize(buttonSize);
+        btn_sair.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btn_sair.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btn_sair.addActionListener(e -> {
+            int response = JOptionPane.showConfirmDialog(this, "Tem a certeza que deseja sair?", "Sair", JOptionPane.YES_NO_OPTION);
+            if (response == JOptionPane.YES_OPTION) {
+                System.exit(0);
+            } else if (response == JOptionPane.NO_OPTION) {
+                setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+            }
+        });
+        cont.add(btn_sair);
 
         addWindowListener(new WindowAdapter() {
             @Override
@@ -61,6 +77,8 @@ public class InicialMenuFrame extends JFrame implements ActionListener {
                 int response = JOptionPane.showConfirmDialog(InicialMenuFrame.this, "Tem a certeza que deseja sair?", "Sair", JOptionPane.YES_NO_OPTION);
                 if (response == JOptionPane.YES_OPTION) {
                     System.exit(0);
+                } else if (response == JOptionPane.NO_OPTION) {
+                    setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                 }
             }
         });

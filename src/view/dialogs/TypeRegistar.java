@@ -94,6 +94,7 @@ public class TypeRegistar extends JDialog implements ActionListener {
         }
 
         if (type.equalsIgnoreCase("fabricante")) {
+            setTitle("Registar Fabricante");
             JLabel label_sector_comercial = new JLabel("Sector Comercial:");
             label_sector_comercial.setBounds(20, 300, 120, 25);
             add(label_sector_comercial);
@@ -104,6 +105,7 @@ public class TypeRegistar extends JDialog implements ActionListener {
         }
 
         if (type.equalsIgnoreCase("tecnico")) {
+            setTitle("Registar Técnico");
             JLabel label_area_especializacao = new JLabel("Área Especialização:");
             label_area_especializacao.setBounds(20, 300, 120, 25);
             add(label_area_especializacao);

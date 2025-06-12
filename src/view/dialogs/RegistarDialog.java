@@ -44,7 +44,7 @@ public class RegistarDialog extends JDialog implements ActionListener {
             TypeRegistar registar_user = new TypeRegistar("Fabricante");
             registar_user.setVisible(true);
         } else if (e.getSource().equals(btnType_tecnico)) {
-            TypeRegistar registar_user = new TypeRegistar("Técnico");
+            TypeRegistar registar_user = new TypeRegistar("Tecnico");
             registar_user.setVisible(true);
         }
         dispose();

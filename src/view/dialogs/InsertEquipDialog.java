@@ -28,7 +28,7 @@ public class InsertEquipDialog extends JDialog implements ActionListener {
         super(parent, "MenuFab", true);
         setLayout(null);
         this.parentFrame = parent;
-        setSize(400, 600);
+        setSize(400, 400);
         setLocationRelativeTo(parentFrame);
 
 
