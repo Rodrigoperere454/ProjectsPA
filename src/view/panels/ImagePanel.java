@@ -6,6 +6,7 @@ import model.Utilizador;
 import utils.Session;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -16,9 +17,10 @@ import java.nio.file.StandardCopyOption;
 
 
 public class ImagePanel extends JPanel {
-    private static final String IMAGE_FOLDER = "./public/imgs/user/profile/";
+    private static final String IMAGE_FOLDER = "public/imgs/user/profile/";
     private BufferedImage image;
     private final String username;
+    private Image scaledImage;
 
     public ImagePanel() {
         Utilizador loggedUser = Session.getUtilizador();
@@ -32,9 +34,11 @@ public class ImagePanel extends JPanel {
             Connection connection = DBconfig.getConnection();
             DBController dbController = new DBController(connection);
             String imagePath = dbController.getUserImage(username);
+
             System.out.println(new File(imagePath).getAbsolutePath());
 
             image = ImageIO.read(new File(imagePath));
+            scaledImage = image.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Erro ao carregar imagem: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -42,6 +46,7 @@ public class ImagePanel extends JPanel {
     }
 
     private void configurarCliqueParaAlterarImagem() {
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -66,6 +71,7 @@ public class ImagePanel extends JPanel {
 
             // Lê a imagem copiada
             image = ImageIO.read(new File(destinationPath));
+            scaledImage = image.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
 
             // Atualiza a base de dados com o novo caminho
             Connection connection = DBconfig.getConnection();
@@ -79,8 +85,6 @@ public class ImagePanel extends JPanel {
             JOptionPane.showMessageDialog(this, "Erro ao carregar nova imagem: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
-
-
 
     private void escolherNovaImagem() {
         JFileChooser fileChooser = new JFileChooser();
@@ -96,12 +100,15 @@ public class ImagePanel extends JPanel {
     }
 
     @Override
-    protected void paintComponent(java.awt.Graphics g) {
+    protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (image != null) {
-            int x = (getWidth() - image.getWidth()) / 2;
-            int y = (getHeight() - image.getHeight()) / 2;
-            g.drawImage(image, x, y, this);
+        if (scaledImage != null) {
+            System.out.println("A desenhar imagem redimensionada no painel...");
+            int x = (getWidth() - scaledImage.getWidth(this)) / 2;
+            int y = (getHeight() - scaledImage.getHeight(this)) / 2;
+            g.drawImage(scaledImage, x, y, this);
+        } else {
+            System.out.println("Imagem está null");
         }
     }
 }

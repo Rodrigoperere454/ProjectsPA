@@ -52,7 +52,7 @@ public class DBController {
     }
 
     public void insertUserImage(String username, String imagePath) {
-        String sql = "UPDATE utilizadores SET imagem = ? WHERE username = ?";
+        String sql = "UPDATE utilizadores SET img_path = ? WHERE username = ?";
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setString(1, imagePath);
             stmt.setString(2, username);

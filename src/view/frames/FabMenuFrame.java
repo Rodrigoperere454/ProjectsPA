@@ -1,16 +1,25 @@
 package view.frames;
 
+import controller.DBController;
+import controller.DBconfig;
+import model.Utilizador;
 import utils.Session;
 import view.dialogs.InsertEquipDialog;
 import view.dialogs.TypeRegistar;
 import view.panels.FabPanel;
+import view.panels.ImagePanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 
 public class FabMenuFrame extends JFrame implements ActionListener {
+    private final Connection connection = DBconfig.getConnection();
+    private final DBController DB = new DBController(connection);
+
+    Utilizador loggedUser = Session.getUtilizador();
 
     private CardLayout cardLayout;
     private JPanel mainPanel;
@@ -42,18 +51,24 @@ public class FabMenuFrame extends JFrame implements ActionListener {
         JPanel menuPanel = new JPanel();
         menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
 
-        JPanel imagePanel = new JPanel();
-        imagePanel.setLayout(new BorderLayout());
+        // Painel da imagem
+        ImagePanel imagePanel = new ImagePanel();
+        imagePanel.setPreferredSize(new Dimension(80, 80));
+        imagePanel.setMaximumSize(new Dimension(80, 80));
+        imagePanel.setBorder(BorderFactory.createLineBorder(Color.RED)); // debug visual
+        imagePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        add(imagePanel);
 
-        JLabel titulo = new JLabel("Menu Fabricante");
-        JLabel welcomeMsg = new JLabel("Bem-vindo, " + Session.getUtilizador().getName() + "!");
+        JLabel titulo = new JLabel("Menu Administrador");
         titulo.setFont(new Font("Arial", Font.BOLD, 22));
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        welcomeMsg.setFont(new Font("Arial", Font.ITALIC, 16));
+        JLabel welcomeMsg = new JLabel("Bem-vindo, " + loggedUser.getName() + "!");
+        welcomeMsg.setFont(new Font("Arial", Font.BOLD, 20));
         welcomeMsg.setAlignmentX(Component.CENTER_ALIGNMENT);
-        menuPanel.add(Box.createVerticalStrut(20));
-        menuPanel.add(titulo);
-        menuPanel.add(Box.createVerticalStrut(20));
+        add(Box.createVerticalStrut(20));
+        add(welcomeMsg);
+        add(titulo);
+        add(Box.createVerticalStrut(20));
 
         for (int i = 0; i < labels.length; i++) {
             botoes[i] = new JButton(labels[i]);

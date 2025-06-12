@@ -47,22 +47,24 @@ public class TechMenuFrame extends JFrame implements ActionListener {
         JPanel menuPanel = new JPanel();
         menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
 
-        // Adiciona um painel de imagem (pode ser usado para logo ou imagem do menu)
+        // Painel da imagem
         ImagePanel imagePanel = new ImagePanel();
-        imagePanel.setPreferredSize(new java.awt.Dimension(150, 150)); // Ajusta o tamanho conforme necessário
+        imagePanel.setPreferredSize(new Dimension(80, 80));
+        imagePanel.setMaximumSize(new Dimension(80, 80));
         imagePanel.setBorder(BorderFactory.createLineBorder(Color.RED)); // debug visual
-        menuPanel.add(imagePanel);
-        menuPanel.add(Box.createVerticalStrut(20));
+        imagePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        add(imagePanel);
 
-        JLabel titulo = new JLabel("Menu Técnico");
-        JLabel welcomeMsg = new JLabel("Bem-vindo, " + loggedUser.getName() + "!");
+        JLabel titulo = new JLabel("Menu Administrador");
         titulo.setFont(new Font("Arial", Font.BOLD, 22));
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        welcomeMsg.setFont(new Font("Arial", Font.ITALIC, 16));
+        JLabel welcomeMsg = new JLabel("Bem-vindo, " + loggedUser.getName() + "!");
+        welcomeMsg.setFont(new Font("Arial", Font.BOLD, 20));
         welcomeMsg.setAlignmentX(Component.CENTER_ALIGNMENT);
-        menuPanel.add(Box.createVerticalStrut(20));
-        menuPanel.add(titulo);
-        menuPanel.add(Box.createVerticalStrut(20));
+        add(Box.createVerticalStrut(20));
+        add(welcomeMsg);
+        add(titulo);
+        add(Box.createVerticalStrut(20));
 
         for (int i = 0; i < labels.length; i++) {
             botoes[i] = new JButton(labels[i]);
