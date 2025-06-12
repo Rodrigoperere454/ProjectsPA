@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.sql.Connection;
 
 import controller.DBController;
@@ -53,18 +54,22 @@ public class TechMenuFrame extends JFrame implements ActionListener {
         imagePanel.setMaximumSize(new Dimension(80, 80));
         imagePanel.setBorder(BorderFactory.createLineBorder(Color.RED)); // debug visual
         imagePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(imagePanel);
 
-        JLabel titulo = new JLabel("Menu Administrador");
+        // Adicionar imagem ao menuPanel
+        menuPanel.add(imagePanel);
+
+        JLabel titulo = new JLabel("Menu Técnico");
         titulo.setFont(new Font("Arial", Font.BOLD, 22));
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         JLabel welcomeMsg = new JLabel("Bem-vindo, " + loggedUser.getName() + "!");
         welcomeMsg.setFont(new Font("Arial", Font.BOLD, 20));
         welcomeMsg.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(Box.createVerticalStrut(20));
-        add(welcomeMsg);
-        add(titulo);
-        add(Box.createVerticalStrut(20));
+
+        menuPanel.add(Box.createVerticalStrut(20));
+        menuPanel.add(welcomeMsg);
+        menuPanel.add(titulo);
+        menuPanel.add(Box.createVerticalStrut(20));
 
         for (int i = 0; i < labels.length; i++) {
             botoes[i] = new JButton(labels[i]);
@@ -75,9 +80,32 @@ public class TechMenuFrame extends JFrame implements ActionListener {
             menuPanel.add(Box.createVerticalStrut(10));
         }
 
+        // Adicionar o menuPanel ao mainPanel (CardLayout)
         mainPanel.add(menuPanel, "menu");
 
-        setContentPane(mainPanel);
+        // Criar JScrollPane com o mainPanel
+        JScrollPane scrollPane = new JScrollPane(mainPanel);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+        // Definir o JScrollPane como content pane do JFrame
+        setContentPane(scrollPane);
+
+        // Mostrar o card "menu"
+        cardLayout.show(mainPanel, "menu");
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                int response = JOptionPane.showConfirmDialog(mainPanel, "Tem a certeza que deseja sair?", "Sair", JOptionPane.YES_NO_OPTION);
+                if (response == JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                } else if (response == JOptionPane.NO_OPTION) {
+                    setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                }
+            }
+        });
+
         setVisible(true);
     }
 
@@ -121,7 +149,9 @@ public class TechMenuFrame extends JFrame implements ActionListener {
                         if (response == JOptionPane.YES_OPTION) {
                             Session.limparSessao();
                             dispose();
-                            new InicialMenuFrame().setVisible(true);
+                            JFrame newInitialMenu = new InicialMenuFrame();
+                            newInitialMenu.setSize(300, 400);
+                            newInitialMenu.setVisible(true);
                         }
                         break;
                 }

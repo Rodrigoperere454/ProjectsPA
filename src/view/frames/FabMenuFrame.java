@@ -13,6 +13,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.sql.Connection;
 
 public class FabMenuFrame extends JFrame implements ActionListener {
@@ -23,6 +24,7 @@ public class FabMenuFrame extends JFrame implements ActionListener {
 
     private CardLayout cardLayout;
     private JPanel mainPanel;
+
     private JButton[] botoes = new JButton[11];
     private String[] labels = {
             "Registar Fabricante",
@@ -44,12 +46,14 @@ public class FabMenuFrame extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
+        // CardLayout principal
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
 
         // Painel de menu principal
-        JPanel menuPanel = new JPanel();
-        menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        contentPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         // Painel da imagem
         ImagePanel imagePanel = new ImagePanel();
@@ -57,32 +61,56 @@ public class FabMenuFrame extends JFrame implements ActionListener {
         imagePanel.setMaximumSize(new Dimension(80, 80));
         imagePanel.setBorder(BorderFactory.createLineBorder(Color.RED)); // debug visual
         imagePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(imagePanel);
+        contentPanel.add(imagePanel);
 
-        JLabel titulo = new JLabel("Menu Administrador");
+        JLabel titulo = new JLabel("Menu Fabricante");
         titulo.setFont(new Font("Arial", Font.BOLD, 22));
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
         JLabel welcomeMsg = new JLabel("Bem-vindo, " + loggedUser.getName() + "!");
         welcomeMsg.setFont(new Font("Arial", Font.BOLD, 20));
         welcomeMsg.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(Box.createVerticalStrut(20));
-        add(welcomeMsg);
-        add(titulo);
-        add(Box.createVerticalStrut(20));
+
+        contentPanel.add(Box.createVerticalStrut(20));
+        contentPanel.add(welcomeMsg);
+        contentPanel.add(titulo);
+        contentPanel.add(Box.createVerticalStrut(20));
 
         for (int i = 0; i < labels.length; i++) {
             botoes[i] = new JButton(labels[i]);
             botoes[i].setAlignmentX(Component.CENTER_ALIGNMENT);
             botoes[i].setMaximumSize(new Dimension(300, 40));
             botoes[i].addActionListener(this);
-            menuPanel.add(botoes[i]);
-            menuPanel.add(Box.createVerticalStrut(10));
+            contentPanel.add(botoes[i]);
+            contentPanel.add(Box.createVerticalStrut(10));
         }
 
-        mainPanel.add(menuPanel, "menu");
-        setContentPane(mainPanel);
+        // Adicionar o painel de conteúdo ao mainPanel com CardLayout
+        mainPanel.add(contentPanel, "menu");
+
+        // JScrollPane que envolve o mainPanel
+        JScrollPane scrollPane = new JScrollPane(mainPanel);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+        setContentPane(scrollPane);
+
+        cardLayout.show(mainPanel, "menu");
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                int response = JOptionPane.showConfirmDialog(mainPanel, "Tem a certeza que deseja sair?", "Sair", JOptionPane.YES_NO_OPTION);
+                if (response == JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                } else if (response == JOptionPane.NO_OPTION) {
+                    setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                }
+            }
+        });
+
         setVisible(true);
     }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -100,16 +128,14 @@ public class FabMenuFrame extends JFrame implements ActionListener {
                         inserir_equip.setVisible(true);
                         break;
                     case 2:
-                        FabPanel certeficarEquipamentosPanel = new FabPanel(this, "pedir_certi");
-                        this.setContentPane(certeficarEquipamentosPanel);
-                        this.revalidate();
-                        this.repaint();
+                        FabPanel certeficarEquipamentosPanel = new FabPanel("pedir_certi", cardLayout, mainPanel);
+                        mainPanel.add(certeficarEquipamentosPanel, "pedir_certi");
+                        cardLayout.show(mainPanel, "pedir_certi");
                         break;
                     case 3:
-                        FabPanel listarEquipamentosPanel = new FabPanel(this, "listar_equip");
-                        this.setContentPane(listarEquipamentosPanel);
-                        this.revalidate();
-                        this.repaint();
+                        FabPanel listarEquipamentosPanel = new FabPanel("listar_equip", cardLayout, mainPanel);
+                        mainPanel.add(listarEquipamentosPanel, "listar_equip");
+                        cardLayout.show(mainPanel, "listar_equip");
                         break;
                     case 4:  break;
                     case 5:  break;
@@ -121,7 +147,9 @@ public class FabMenuFrame extends JFrame implements ActionListener {
                         int response = JOptionPane.showConfirmDialog(this, "Tem a certeza que deseja fazer logout?", "Logout", JOptionPane.YES_NO_OPTION);
                         if (response == JOptionPane.YES_OPTION) {
                             dispose();
-                            new InicialMenuFrame().setVisible(true);
+                            JFrame newInitialMenu = new InicialMenuFrame();
+                            newInitialMenu.setSize(300, 400);
+                            newInitialMenu.setVisible(true);
                         }
                         break;
                 }
