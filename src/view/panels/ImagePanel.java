@@ -42,13 +42,11 @@ public class ImagePanel extends JPanel {
             scaledImage = image.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
         } catch (NullPointerException e) {
             JOptionPane.showMessageDialog(this, "Erro ao carregar imagem de perfil vai ser usada a imagem padrão.", "Erro", JOptionPane.ERROR_MESSAGE);
-            // Se não conseguir carregar a imagem, define uma imagem padrão
-            carregarImagemDefault();
+            carregarImagemDefault(); // Se não conseguir carregar a imagem, define uma imagem padrão
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Erro ao carregar imagem de perfil vai ser usada a imagem padrão.", "Erro", JOptionPane.ERROR_MESSAGE);
-            // Se ocorrer um erro, tenta carregar a imagem padrão
-            carregarImagemDefault();
+            carregarImagemDefault(); // Se ocorrer um erro, tenta carregar a imagem padrão
         }
     }
 
