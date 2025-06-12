@@ -1,9 +1,5 @@
 import controller.DBconfig;
-import controller.UtilizadorController;
-import view.frames.FabMenuFrame;
 import view.frames.InicialMenuFrame;
-import view.frames.TechMenuFrame;
-import view.frames.AdminMenuFrame;
 
 import java.sql.Connection;
 
@@ -16,18 +12,6 @@ public class Main {
         InicialMenuFrame menuInicial = new InicialMenuFrame();
         menuInicial.setSize(400, 400);
         menuInicial.setVisible(true);
-
-        /*TechMenuFrame techMenuFrame = new TechMenuFrame();
-        techMenuFrame.setSize(400, 500);
-        techMenuFrame.setVisible(true);*/
-
-        /*FabMenuFrame fabMenuFrame = new FabMenuFrame();
-        fabMenuFrame.setSize(400, 500);
-        fabMenuFrame.setVisible(true);*/
-
-        /*AdminMenuFrame adminMenuFrame = new AdminMenuFrame();
-        adminMenuFrame.setSize(400, 580);
-        adminMenuFrame.setVisible(true);*/
 
         Connection connection = null;
 

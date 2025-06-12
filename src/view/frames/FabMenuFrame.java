@@ -59,7 +59,6 @@ public class FabMenuFrame extends JFrame implements ActionListener {
         ImagePanel imagePanel = new ImagePanel();
         imagePanel.setPreferredSize(new Dimension(80, 80));
         imagePanel.setMaximumSize(new Dimension(80, 80));
-        imagePanel.setBorder(BorderFactory.createLineBorder(Color.RED)); // debug visual
         imagePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         contentPanel.add(imagePanel);
 
