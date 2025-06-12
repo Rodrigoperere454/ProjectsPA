@@ -5,6 +5,7 @@ import controller.DBconfig;
 import model.Certificacao;
 import model.Notificacao;
 import model.Utilizador;
+import utils.Session;
 import view.frames.AdminMenuFrame;
 
 import javax.swing.*;
@@ -16,18 +17,19 @@ import java.sql.Connection;
 import java.util.Arrays;
 
 public class GestorPanel extends JPanel implements ActionListener {
-
+    private CardLayout cardLayout;
+    private JPanel mainPanel;
 
     private JButton botao_registar;
 
-
     Connection conexao = DBconfig.getConnection();
     DBController DB = new DBController(conexao);
+    Utilizador user = Session.getUtilizador();
 
-
-    public GestorPanel(String order, JFrame parent) {
+    public GestorPanel(String order, CardLayout cardLayout, JPanel mainPanel) {
+        this.cardLayout = cardLayout;
+        this.mainPanel = mainPanel;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         switch (order) {
             case "listar_utilizadores":
@@ -56,16 +58,9 @@ public class GestorPanel extends JPanel implements ActionListener {
 
                 JButton botao_voltar_utilizador = new JButton("Voltar");
                 botao_voltar_utilizador.setAlignmentX(Component.CENTER_ALIGNMENT);
-                botao_voltar_utilizador.addActionListener(
-                        new ActionListener() {
-                            public void actionPerformed(ActionEvent e) {
-                                parent.dispose();
-                                new AdminMenuFrame().setVisible(true);
-                            }
-                        }
-                );
+                botao_voltar_utilizador.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
+                add(Box.createVerticalStrut(20));
                 add(botao_voltar_utilizador);
-
                 break;
             case "notificacao":
                 JLabel label_notificacao = new JLabel("Notificações");
@@ -95,16 +90,9 @@ public class GestorPanel extends JPanel implements ActionListener {
 
                 JButton botao_voltar_notificacao = new JButton("Voltar");
                 botao_voltar_notificacao.setAlignmentX(Component.CENTER_ALIGNMENT);
-                botao_voltar_notificacao.addActionListener(
-                        new ActionListener() {
-                            public void actionPerformed(ActionEvent e) {
-                                parent.dispose();
-                                new AdminMenuFrame().setVisible(true);
-                            }
-                        }
-                );
+                botao_voltar_notificacao.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
+                add(Box.createVerticalStrut(20));
                 add(botao_voltar_notificacao);
-
 
                 break;
             case "aceitar":
@@ -136,14 +124,8 @@ public class GestorPanel extends JPanel implements ActionListener {
                 JButton botao_voltar = new JButton("Voltar");
                 botao_voltar.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-                botao_voltar.addActionListener(
-                        new ActionListener() {
-                            public void actionPerformed(ActionEvent e) {
-                                parent.dispose();
-                                new AdminMenuFrame().setVisible(true);
-                            }
-                        }
-                );
+                botao_voltar.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
+                add(Box.createVerticalStrut(20));
                 add(botao_voltar);
 
                 JButton botao_aceitar = new JButton("Aceitar");
@@ -152,24 +134,24 @@ public class GestorPanel extends JPanel implements ActionListener {
                         new ActionListener() {
                             public void actionPerformed(ActionEvent e) {
                                 if (table_aceitar.getSelectedRow() == -1) {
-                                    JOptionPane.showMessageDialog(parent, "Nenhum Utilizador foi selecioando! Selecione para Ativar!");
+                                    JOptionPane.showMessageDialog(mainPanel, "Nenhum Utilizador foi selecioando! Selecione para Ativar!");
 
                                 } else {
                                     int id_user = (int) table_aceitar.getValueAt(table_aceitar.getSelectedRow(), 0);
                                     String estado = (String) table_aceitar.getValueAt(table_aceitar.getSelectedRow(), 5);
                                     if (estado.equalsIgnoreCase("ativo")) {
-                                        int response = JOptionPane.showConfirmDialog(parent, "O Utilizador Seleciona esta Ativo, deseja Desativar?", "Ativar/Remover", JOptionPane.YES_NO_OPTION);
+                                        int response = JOptionPane.showConfirmDialog(mainPanel, "O Utilizador Seleciona esta Ativo, deseja Desativar?", "Ativar/Remover", JOptionPane.YES_NO_OPTION);
                                         if (response == JOptionPane.YES_OPTION) {
                                             DB.desativarUtilizador(id_user);
                                         } else if (response == JOptionPane.NO_OPTION) {
-                                            JOptionPane.showMessageDialog(parent, "Operacao Cancelada!");
+                                            JOptionPane.showMessageDialog(mainPanel, "Operacao Cancelada!");
                                         }
                                     } else if (estado.equalsIgnoreCase("desativo")) {
-                                        int response = JOptionPane.showConfirmDialog(parent, "O Utilizador Selecionado esta Desativo, deseja Ativar?", "Ativar/Remover", JOptionPane.YES_NO_OPTION);
+                                        int response = JOptionPane.showConfirmDialog(mainPanel, "O Utilizador Selecionado esta Desativo, deseja Ativar?", "Ativar/Remover", JOptionPane.YES_NO_OPTION);
                                         if (response == JOptionPane.YES_OPTION) {
                                             DB.ativarUtilizador(id_user);
                                         } else if (response == JOptionPane.NO_OPTION) {
-                                            JOptionPane.showMessageDialog(parent, "Operacao Cancelada!");
+                                            JOptionPane.showMessageDialog(mainPanel, "Operacao Cancelada!");
                                         }
                                     }
 
@@ -221,14 +203,8 @@ public class GestorPanel extends JPanel implements ActionListener {
 
                 JButton botao_voltar_certe = new JButton("Voltar");
                 botao_voltar_certe.setAlignmentX(Component.CENTER_ALIGNMENT);
-                botao_voltar_certe.addActionListener(
-                        new ActionListener() {
-                            public void actionPerformed(ActionEvent e) {
-                                parent.dispose();
-                                new AdminMenuFrame().setVisible(true);
-                            }
-                        }
-                );
+                botao_voltar_certe.addActionListener(e ->cardLayout.show(mainPanel, "menu"));
+                add(Box.createVerticalStrut(20));
                 add(botao_voltar_certe);
 
                 JButton botao_aceitar_certe = new JButton("Aceitar Certeficação");
@@ -240,23 +216,23 @@ public class GestorPanel extends JPanel implements ActionListener {
                             public void actionPerformed(ActionEvent e) {
                                 int id_tecnico = 0;
                                 if (table_certe.getSelectedRow() == -1) {
-                                    JOptionPane.showMessageDialog(parent, "Nenhum Equipamento foi selecioando! Selecione para Aceitar Certeficação!");
+                                    JOptionPane.showMessageDialog(mainPanel, "Nenhum Equipamento foi selecioando! Selecione para Aceitar Certeficação!");
                                 } else {
                                     int id_certe = (int) table_certe.getValueAt(table_certe.getSelectedRow(), 2);
                                     String tecnico = textField_tecnico.getText();
                                     if (tecnico.isEmpty()) {
-                                        JOptionPane.showMessageDialog(parent, "Introduza o Tecnico Responsavel!");
+                                        JOptionPane.showMessageDialog(mainPanel, "Introduza o Tecnico Responsavel!");
                                     } else {
                                         try{
                                             id_tecnico = Integer.parseInt(tecnico);
                                         }catch(NumberFormatException ex){
-                                            JOptionPane.showMessageDialog(parent, "Introduza um ID de Tecnico Válido!");
+                                            JOptionPane.showMessageDialog(mainPanel, "Introduza um ID de Tecnico Válido!");
                                             return;
                                         }
 
                                         System.out.println(id_tecnico);
                                         DB.aceitarPedidoCerteficacao(id_certe, "Aceite", id_tecnico);
-                                        JOptionPane.showMessageDialog(parent, "Certeficação Aceite com Sucesso!");
+                                        JOptionPane.showMessageDialog(mainPanel, "Certeficação Aceite com Sucesso!");
                                         DB.enviarNotificacao(id_tecnico, "Em espera de certeficação - " + id_certe, "tecnico", "Técnicos");
 
                                     }

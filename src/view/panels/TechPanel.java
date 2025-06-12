@@ -55,7 +55,6 @@ public class TechPanel extends JPanel implements ActionListener {
                 add(voltarButton);
                 break;
             case "rem_conta":
-
                 break;
             case "ver_not":
                 break;
