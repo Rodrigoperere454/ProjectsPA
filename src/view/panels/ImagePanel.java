@@ -32,9 +32,9 @@ public class ImagePanel extends JPanel {
         try {
             Connection connection = DBconfig.getConnection();
             DBController dbController = new DBController(connection);
-            //String imagePath = dbController.getUserImage(username);
+            String imagePath = dbController.getUserImage(username);
 
-            //image = ImageIO.read(new File(imagePath));
+            image = ImageIO.read(new File(imagePath));
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Erro ao carregar imagem: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
