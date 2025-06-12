@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -39,6 +40,40 @@ public class ImagePanel extends JPanel {
 
             image = ImageIO.read(new File(imagePath));
             scaledImage = image.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar imagem de perfil vai ser usada a imagem padrão.", "Erro", JOptionPane.ERROR_MESSAGE);
+            // Se não conseguir carregar a imagem, define uma imagem padrão
+            carregarImagemDefault();
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Erro ao carregar imagem de perfil vai ser usada a imagem padrão.", "Erro", JOptionPane.ERROR_MESSAGE);
+            // Se ocorrer um erro, tenta carregar a imagem padrão
+            carregarImagemDefault();
+        }
+    }
+
+    private void carregarImagemDefault() {
+        try {
+            image = ImageIO.read(new File("public/imgs/user/profile/default_profile_img.png"));
+            scaledImage = image.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+            repaint();
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Erro ao carregar imagem padrão: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void carregarImagemComFallback(String path) {
+        try {
+            File file = new File(path);
+            if (!file.exists()) {
+                System.err.println("Ficheiro não existe: " + file.getAbsolutePath());
+                throw new Exception("Ficheiro não encontrado: " + path);
+            }
+
+            image = ImageIO.read(file);
+            scaledImage = image.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+            repaint();
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Erro ao carregar imagem: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -79,6 +114,7 @@ public class ImagePanel extends JPanel {
             dbController.insertUserImage(username, destinationPath);
 
             repaint();
+            JOptionPane.showMessageDialog(this, "Nova imagem carregada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
 
         } catch (Exception e) {
             e.printStackTrace();
