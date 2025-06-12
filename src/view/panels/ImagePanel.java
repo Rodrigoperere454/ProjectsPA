@@ -27,12 +27,12 @@ public class ImagePanel extends JPanel {
         configurarCliqueParaAlterarImagem();
     }
 
-    //
     private void carregarImagemInicial() {
         try {
             Connection connection = DBconfig.getConnection();
             DBController dbController = new DBController(connection);
             String imagePath = dbController.getUserImage(username);
+            System.out.println(new File(imagePath).getAbsolutePath());
 
             image = ImageIO.read(new File(imagePath));
         } catch (Exception e) {

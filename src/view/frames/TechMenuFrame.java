@@ -50,6 +50,7 @@ public class TechMenuFrame extends JFrame implements ActionListener {
         // Adiciona um painel de imagem (pode ser usado para logo ou imagem do menu)
         ImagePanel imagePanel = new ImagePanel();
         imagePanel.setPreferredSize(new java.awt.Dimension(150, 150)); // Ajusta o tamanho conforme necessário
+        imagePanel.setBorder(BorderFactory.createLineBorder(Color.RED)); // debug visual
         menuPanel.add(imagePanel);
         menuPanel.add(Box.createVerticalStrut(20));
 

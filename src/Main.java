@@ -13,13 +13,13 @@ public class Main {
      * @param args
      */
     public static void main(String[] args) throws Exception {
-        /*InicialMenuFrame menuInicial = new InicialMenuFrame();
+        InicialMenuFrame menuInicial = new InicialMenuFrame();
         menuInicial.setSize(400, 400);
-        menuInicial.setVisible(true);*/
+        menuInicial.setVisible(true);
 
-        TechMenuFrame techMenuFrame = new TechMenuFrame();
+        /*TechMenuFrame techMenuFrame = new TechMenuFrame();
         techMenuFrame.setSize(400, 500);
-        techMenuFrame.setVisible(true);
+        techMenuFrame.setVisible(true);*/
 
         /*FabMenuFrame fabMenuFrame = new FabMenuFrame();
         fabMenuFrame.setSize(400, 500);
