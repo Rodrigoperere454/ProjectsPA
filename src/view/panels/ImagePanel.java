@@ -63,23 +63,6 @@ public class ImagePanel extends JPanel {
         }
     }
 
-    private void carregarImagemComFallback(String path) {
-        try {
-            File file = new File(path);
-            if (!file.exists()) {
-                System.err.println("Ficheiro não existe: " + file.getAbsolutePath());
-                throw new Exception("Ficheiro não encontrado: " + path);
-            }
-
-            image = ImageIO.read(file);
-            scaledImage = image.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
-            repaint();
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Erro ao carregar imagem: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
     private void configurarCliqueParaAlterarImagem() {
         this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         this.addMouseListener(new MouseAdapter() {
