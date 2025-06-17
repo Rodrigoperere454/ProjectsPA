@@ -60,6 +60,7 @@ public class GestorPanel extends JPanel implements ActionListener {
                 botao_voltar_utilizador.setAlignmentX(Component.CENTER_ALIGNMENT);
                 botao_voltar_utilizador.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
                 add(Box.createVerticalStrut(20));
+                botao_voltar_utilizador.setToolTipText("Voltar ao menu do Gestor");
                 add(botao_voltar_utilizador);
                 break;
             case "notificacao":
@@ -92,6 +93,7 @@ public class GestorPanel extends JPanel implements ActionListener {
                 botao_voltar_notificacao.setAlignmentX(Component.CENTER_ALIGNMENT);
                 botao_voltar_notificacao.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
                 add(Box.createVerticalStrut(20));
+                botao_voltar_notificacao.setToolTipText("Voltar ao menu do Gestor");
                 add(botao_voltar_notificacao);
 
                 break;
@@ -123,7 +125,7 @@ public class GestorPanel extends JPanel implements ActionListener {
 
                 JButton botao_voltar = new JButton("Voltar");
                 botao_voltar.setAlignmentX(Component.CENTER_ALIGNMENT);
-
+                botao_voltar.setToolTipText("Voltar ao menu do Gestor");
                 botao_voltar.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
                 add(Box.createVerticalStrut(20));
                 add(botao_voltar);
@@ -162,6 +164,7 @@ public class GestorPanel extends JPanel implements ActionListener {
                             }
                         }
                 );
+                botao_aceitar.setToolTipText("Ativar/Desativar Utilizador");
                 add(botao_aceitar);
 
                 break;
@@ -198,6 +201,7 @@ public class GestorPanel extends JPanel implements ActionListener {
                 JTextField textField_tecnico = new JTextField();
                 textField_tecnico.setMaximumSize(new Dimension(200, 25));
                 textField_tecnico.setAlignmentX(Component.CENTER_ALIGNMENT);
+                textField_tecnico.setToolTipText("Introduza o ID do Tecnico Responsavel pela Certeficação");
                 add(textField_tecnico);
 
 
@@ -205,6 +209,7 @@ public class GestorPanel extends JPanel implements ActionListener {
                 botao_voltar_certe.setAlignmentX(Component.CENTER_ALIGNMENT);
                 botao_voltar_certe.addActionListener(e ->cardLayout.show(mainPanel, "menu"));
                 add(Box.createVerticalStrut(20));
+                botao_voltar_certe.setToolTipText("Voltar");
                 add(botao_voltar_certe);
 
                 JButton botao_aceitar_certe = new JButton("Aceitar Certeficação");
@@ -240,7 +245,88 @@ public class GestorPanel extends JPanel implements ActionListener {
                             }
                         }
                 );
+                botao_aceitar_certeficacao.setToolTipText("Aceitar Certeficação de Equipamento");
                 add(botao_aceitar_certeficacao);
+                break;
+            case "list_cert":
+                JLabel label_list_cert = new JLabel("Lista de Certeficações");
+                label_list_cert.setBounds(20, 0, 200, 25);
+                label_list_cert.setAlignmentX(Component.CENTER_ALIGNMENT);
+                add(label_list_cert);
+
+                Certificacao[] certificacoes_list = DB.listarCerteficacaoInterface();
+                String[] columnNames_certe_list = {"ID", "ID Fabricante", "ID Equipamento", "Estado", "Data Submissao", "Numero Certificacao"};
+                Object[][] data_certe_list = new Object[certificacoes_list.length][columnNames_certe_list.length];
+                for (int i = 0; i < certificacoes_list.length; i++) {
+                    data_certe_list[i][0] = certificacoes_list[i].getId();
+                    data_certe_list[i][1] = certificacoes_list[i].getId_fabricante();
+                    data_certe_list[i][2] = certificacoes_list[i].getId_equipamento();
+                    data_certe_list[i][3] = certificacoes_list[i].getEstado();
+                    data_certe_list[i][4] = certificacoes_list[i].getData_realizacao();
+                    data_certe_list[i][5] = certificacoes_list[i].getNumero_certificacao();
+                }
+
+                JTable table_certe_list = new JTable(data_certe_list, columnNames_certe_list);
+                table_certe_list.setFillsViewportHeight(true);
+                JScrollPane scrollPaneCerte_list = new JScrollPane(table_certe_list);
+                scrollPaneCerte_list.setMaximumSize(new Dimension(600, 200));
+                add(scrollPaneCerte_list);
+
+                JButton botao_voltar_certe_list = new JButton("Voltar");
+                botao_voltar_certe_list.setAlignmentX(Component.CENTER_ALIGNMENT);
+                botao_voltar_certe_list.addActionListener(e ->cardLayout.show(mainPanel, "menu"));
+                add(Box.createVerticalStrut(20));
+                botao_voltar_certe_list.setToolTipText("Voltar");
+                add(botao_voltar_certe_list);
+                break;
+
+                case "arquivar_cert":
+                JLabel label_arq_cert = new JLabel("Arquivar Certeficações");
+                label_arq_cert.setBounds(20, 0, 200, 25);
+                label_arq_cert.setAlignmentX(Component.CENTER_ALIGNMENT);
+                add(label_arq_cert);
+                Certificacao[] certificacoes_arq = DB.listarCerteficacaoInterface();
+                String[] columnNames_certe_arq = {"ID", "ID Fabricante", "ID Equipamento", "Estado", "Data Submissao", "Numero Certificacao"};
+                Object[][] data_certe_arq = new Object[certificacoes_arq.length][columnNames_certe_arq.length];
+                for (int i = 0; i < certificacoes_arq.length; i++) {
+                    data_certe_arq[i][0] = certificacoes_arq[i].getId();
+                    data_certe_arq[i][1] = certificacoes_arq[i].getId_fabricante();
+                    data_certe_arq[i][2] = certificacoes_arq[i].getId_equipamento();
+                    data_certe_arq[i][3] = certificacoes_arq[i].getEstado();
+                    data_certe_arq[i][4] = certificacoes_arq[i].getData_realizacao();
+                    data_certe_arq[i][5] = certificacoes_arq[i].getNumero_certificacao();
+                }
+
+                JTable table_certe_arq = new JTable(data_certe_arq, columnNames_certe_arq);
+                table_certe_arq.setFillsViewportHeight(true);
+                JScrollPane scrollPaneCerte_arq = new JScrollPane(table_certe_arq);
+                scrollPaneCerte_arq.setMaximumSize(new Dimension(600, 200));
+                add(scrollPaneCerte_arq);
+
+                JButton botao_voltar_certe_arq = new JButton("Voltar");
+                botao_voltar_certe_arq.setAlignmentX(Component.CENTER_ALIGNMENT);
+                botao_voltar_certe_arq.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
+                add(Box.createVerticalStrut(20));
+                botao_voltar_certe_arq.setToolTipText("Voltar");
+                add(botao_voltar_certe_arq);
+
+                JButton botao_arq_cert = new JButton("Arquivar Certeficação");
+                botao_arq_cert.setAlignmentX(Component.CENTER_ALIGNMENT);
+                botao_arq_cert.addActionListener(
+                        new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+                                if (table_certe_arq.getSelectedRow() == -1) {
+                                    JOptionPane.showMessageDialog(mainPanel, "Nenhuma certificação foi selecioanda! Selecione para Arquivar Certeficação!");
+                                } else {
+                                    int id_certe = (int) table_certe_arq.getValueAt(table_certe_arq.getSelectedRow(), 0);
+                                    DB.arquivarCerteficacao(id_certe);
+                                    JOptionPane.showMessageDialog(mainPanel, "Certeficação Arquivada com Sucesso!");
+                                }
+                            }
+                        }
+                );
+                botao_arq_cert.setToolTipText("Arquivar Certeficação de Equipamento");
+                add(botao_arq_cert);
                 break;
         }
     }

@@ -44,6 +44,7 @@ public class FabPanel extends JPanel implements ActionListener {
                 botao_voltar.setAlignmentX(Component.CENTER_ALIGNMENT);
                 botao_voltar.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
                 add(Box.createVerticalStrut(20));
+                botao_voltar.setToolTipText("Voltar ao menu principal");
                 add(botao_voltar);
                 break;
             case "pedir_certi":
@@ -78,6 +79,7 @@ public class FabPanel extends JPanel implements ActionListener {
                 botao_voltar_ped_cert.setAlignmentX(Component.CENTER_ALIGNMENT);
                 botao_voltar_ped_cert.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
                 add(Box.createVerticalStrut(20));
+                botao_voltar_ped_cert.setToolTipText("Voltar ao menu principal");
                 add(botao_voltar_ped_cert);
 
                 JButton botao_certificar = new JButton("Pedir Certificação");
@@ -99,7 +101,56 @@ public class FabPanel extends JPanel implements ActionListener {
                         }
                     }
                 });
+                botao_certificar.setToolTipText("Pedir certificação de um equipamento");
                 add(botao_certificar);
+                break;
+            case "pedidos_feitos":
+                JLabel label_titulo_pedidos = new JLabel("Pedidos de Certificação Feitos");
+                label_titulo_pedidos.setAlignmentX(Component.CENTER_ALIGNMENT);
+                add(label_titulo_pedidos);
+
+                Certificacao[] pedidos_fabricante = DB.listarCerteficacaoFabricanteInterface(user.getId());
+                JList<Certificacao> list_pedidos = new JList<>(pedidos_fabricante);
+                JScrollPane scroll_pedidos = new JScrollPane(list_pedidos);
+                scroll_pedidos.setPreferredSize(new Dimension(500, 300));
+                add(scroll_pedidos);
+
+                JButton botao_voltar_ped_feitos = new JButton("Voltar");
+                botao_voltar_ped_feitos.setAlignmentX(Component.CENTER_ALIGNMENT);
+                botao_voltar_ped_feitos.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
+                add(Box.createVerticalStrut(20));
+                botao_voltar_ped_feitos.setToolTipText("Voltar ao menu principal");
+                add(botao_voltar_ped_feitos);
+                break;
+
+            case "ver_estado_certificacao":
+                JLabel label_titulo_estado = new JLabel("Estado da Certificação");
+                label_titulo_estado.setAlignmentX(Component.CENTER_ALIGNMENT);
+                add(label_titulo_estado);
+
+                Certificacao[] estados_certificacao = DB.listarCerteficacaoFabricanteInterface(user.getId());
+                String[] columnNames_estados = {"ID", "ID Equipamento", "Estado", "Data Realização", "Número Certificação"};
+                Object[][] data_estados = new Object[estados_certificacao.length][columnNames_estados.length];
+                for (int i = 0; i < estados_certificacao.length; i++) {
+                    data_estados[i][0] = estados_certificacao[i].getId();
+                    data_estados[i][1] = estados_certificacao[i].getId_equipamento();
+                    data_estados[i][2] = estados_certificacao[i].getEstado();
+                    data_estados[i][3] = estados_certificacao[i].getData_realizacao();
+                    data_estados[i][4] = estados_certificacao[i].getNumero_certificacao();
+                }
+
+                JTable table_estados = new JTable(data_estados, columnNames_estados);
+                table_estados.setPreferredScrollableViewportSize(new Dimension(500, 200));
+                table_estados.setFillsViewportHeight(true);
+                JScrollPane scrollPaneEstados = new JScrollPane(table_estados);
+                add(scrollPaneEstados);
+
+                JButton botao_voltar_estado = new JButton("Voltar");
+                botao_voltar_estado.setAlignmentX(Component.CENTER_ALIGNMENT);
+                botao_voltar_estado.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
+                add(Box.createVerticalStrut(20));
+                botao_voltar_estado.setToolTipText("Voltar ao menu principal");
+                add(botao_voltar_estado);
                 break;
         }
     }

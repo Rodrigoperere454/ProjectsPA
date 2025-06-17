@@ -5,6 +5,7 @@ import controller.DBconfig;
 import model.Utilizador;
 import utils.Session;
 import view.dialogs.InsertEquipDialog;
+import view.dialogs.ObservationDialog;
 import view.dialogs.TypeRegistar;
 import view.panels.FabPanel;
 import view.panels.ImagePanel;
@@ -32,11 +33,9 @@ public class FabMenuFrame extends JFrame implements ActionListener {
             "Pedir Certificação",
             "Listar Equipamentos",
             "Listar Pedidos Feitos",
-            "Pesquisar Equipamentos",
-            "Pesquisar Pedidos Certificação",
             "Ver Estado de uma Certificação",
             "Remover Conta",
-            "Alterar Minhas Infos",
+            "Observações",
             "Logout"
     };
 
@@ -136,13 +135,37 @@ public class FabMenuFrame extends JFrame implements ActionListener {
                         mainPanel.add(listarEquipamentosPanel, "listar_equip");
                         cardLayout.show(mainPanel, "listar_equip");
                         break;
-                    case 4:  break;
-                    case 5:  break;
-                    case 6:  break;
-                    case 7:  break;
-                    case 8: break;
-                    case 9: break;
-                    case 10:
+                    case 4:
+                        FabPanel pedidosFeitosPanel = new FabPanel("pedidos_feitos", cardLayout, mainPanel);
+                        mainPanel.add(pedidosFeitosPanel, "pedidos_feitos");
+                        cardLayout.show(mainPanel, "pedidos_feitos");
+                        break;
+                    case 5:
+                        FabPanel verEstadoCertificacaoPanel = new FabPanel("ver_estado_certificacao", cardLayout, mainPanel);
+                        mainPanel.add(verEstadoCertificacaoPanel, "ver_estado_certificacao");
+                        cardLayout.show(mainPanel, "ver_estado_certificacao");
+                        break;
+                    case 6:
+                        int confirm = JOptionPane.showConfirmDialog(this, "Tem a certeza que deseja remover a sua conta?", "Remover Conta", JOptionPane.YES_NO_OPTION);
+                        if (confirm == JOptionPane.YES_OPTION) {
+                            try {
+                                DB.enviarNotificacao(loggedUser.getId(), "remover conta", "fabricante", "Gestores");
+                                JOptionPane.showMessageDialog(this, "Notificação Enviada para um gestor. Brevemente entraremos em contato.");
+                                dispose();
+                            } catch (Exception ex) {
+                                JOptionPane.showMessageDialog(this, "Erro ao remover conta: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                            }
+                        }else if (confirm == JOptionPane.NO_OPTION) {
+                            JOptionPane.showMessageDialog(this, "Operação cancelada.");
+                        }
+                        break;
+                    case 7:
+                        ObservationDialog dialog = new ObservationDialog(FabMenuFrame.this, "Menu Fabricante");
+                        dialog.setSize(400, 200);
+                        dialog.setLocationRelativeTo(FabMenuFrame.this);
+                        dialog.setVisible(true);
+                        break;
+                    case 8:
                         int response = JOptionPane.showConfirmDialog(this, "Tem a certeza que deseja fazer logout?", "Logout", JOptionPane.YES_NO_OPTION);
                         if (response == JOptionPane.YES_OPTION) {
                             dispose();

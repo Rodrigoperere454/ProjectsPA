@@ -43,6 +43,7 @@ public class InsertEquipDialog extends JDialog implements ActionListener {
 
         marca_field = new JTextField();
         marca_field.setBounds(100, 60, 200, 25);
+        marca_field.setToolTipText("Insira a marca do equipamento");
         add(marca_field);
 
         JLabel label_modelo = new JLabel("Modelo:");
@@ -51,6 +52,7 @@ public class InsertEquipDialog extends JDialog implements ActionListener {
 
         modelo_field = new JTextField();
         modelo_field.setBounds(100, 100, 200, 25);
+        modelo_field.setToolTipText("Insira o modelo do equipamento");
         add(modelo_field);
 
         JLabel label_setor = new JLabel("Setor:");
@@ -59,6 +61,7 @@ public class InsertEquipDialog extends JDialog implements ActionListener {
 
         setor_field = new JTextField();
         setor_field.setBounds(100, 140, 200, 25);
+        setor_field.setToolTipText("Insira o setor do equipamento");
         add(setor_field);
 
         JLabel label_potencia = new JLabel("Potencia:");
@@ -67,6 +70,7 @@ public class InsertEquipDialog extends JDialog implements ActionListener {
 
         potencia_field = new JTextField();
         potencia_field.setBounds(100, 180, 200, 25);
+        potencia_field.setToolTipText("Insira a potencia do equipamento (em Watts)");
         add(potencia_field);
 
         JLabel label_amperagem = new JLabel("Amperagem:");
@@ -75,6 +79,7 @@ public class InsertEquipDialog extends JDialog implements ActionListener {
 
         amperagem_field = new JTextField();
         amperagem_field.setBounds(100, 220, 200, 25);
+        amperagem_field.setToolTipText("Insira a amperagem do equipamento (em Amperes)");
         add(amperagem_field);
 
         JLabel label_numero_modelo = new JLabel("Numero Modelo:");
@@ -83,14 +88,19 @@ public class InsertEquipDialog extends JDialog implements ActionListener {
 
         numero_modelo_field = new JTextField();
         numero_modelo_field.setBounds(130, 260, 200, 25);
+        numero_modelo_field.setToolTipText("Insira o número do modelo do equipamento");
         add(numero_modelo_field);
 
         adicionar_equip_butao = new JButton("Adicionar");
-        adicionar_equip_butao.setBounds(50, 320, 120, 25);        adicionar_equip_butao.addActionListener(this);
+        adicionar_equip_butao.setBounds(50, 320, 120, 25);
+        adicionar_equip_butao.addActionListener(this);
+        adicionar_equip_butao.setToolTipText("Adicionar equipamento");
         add(adicionar_equip_butao);
 
         cancelar_butao = new JButton("Cancelar");
-        cancelar_butao.setBounds(200, 320, 120, 25);        cancelar_butao.addActionListener(this);
+        cancelar_butao.setBounds(200, 320, 120, 25);
+        cancelar_butao.addActionListener(this);
+        cancelar_butao.setToolTipText("Cancelar inserção de equipamento");
         add(cancelar_butao);
 
 

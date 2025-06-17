@@ -35,6 +35,7 @@ public class InicialMenuFrame extends JFrame implements ActionListener {
         btn_login.setAlignmentX(Component.CENTER_ALIGNMENT);
         btn_login.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btn_login.addActionListener(this);
+        btn_login.setToolTipText("Clique neste botão para iniciar sessão");
         cont.add(btn_login);
         cont.add(Box.createRigidArea(new Dimension(0, 20)));
         btn_registar = new JButton("Registar Utilizador");
@@ -44,6 +45,7 @@ public class InicialMenuFrame extends JFrame implements ActionListener {
         btn_registar.setAlignmentX(Component.CENTER_ALIGNMENT);
         btn_registar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btn_registar.addActionListener(this);
+        btn_registar.setToolTipText("Clique neste botão para registar um novo utilizador");
         cont.add(btn_registar);
         cont.add(Box.createRigidArea(new Dimension(0, 20)));
         btn_db = new JButton("Alterar Dados da Base de Dados");
@@ -53,9 +55,11 @@ public class InicialMenuFrame extends JFrame implements ActionListener {
         btn_db.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btn_db.setAlignmentX(Component.CENTER_ALIGNMENT);
         btn_db.addActionListener(this);
+        btn_db.setToolTipText("Clique neste botão para alterar os dados da base de dados");
         cont.add(btn_db);
         cont.add(Box.createRigidArea(new Dimension(0, 20)));
         btn_sair = new JButton("Sair");
+        btn_sair.setToolTipText("Clique neste botão para sair da aplicação");
         btn_sair.setPreferredSize(buttonSize);
         btn_sair.setMaximumSize(buttonSize);
         btn_sair.setMinimumSize(buttonSize);

@@ -20,6 +20,7 @@ public class Certificacao {
     }
 
     public Certificacao(int id, int id_fabricante, int id_equipamento, int id_tecnico, String estado, String data_realizacao, String numero_certificacao, String numero_licenca, int custo, int tempo_decorrido) {
+        this.id = id;
         this.id_fabricante = id_fabricante;
         this.id_equipamento = id_equipamento;
         this.id_tecnico = id_tecnico;
@@ -111,5 +112,10 @@ public class Certificacao {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Certificação nº: " + numero_certificacao + ", Data: " + data_realizacao + ", Estado: " + estado;
     }
 }

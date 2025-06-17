@@ -22,15 +22,18 @@ public class RegistarDialog extends JDialog implements ActionListener {
         btnType_gestor = new JButton("Registar Gestor");
         btnType_gestor.setBounds(50, 20, 200, 30);
         btnType_gestor.addActionListener(this);
+        btnType_gestor.setToolTipText("Registar um utilizador do tipo Gestor");
         add(btnType_gestor);
 
         btnType_fabricante = new JButton("Registar Fabricante");
         btnType_fabricante.setBounds(50, 60, 200, 30);
         btnType_fabricante.addActionListener(this);
+        btnType_fabricante.setToolTipText("Registar um utilizador do tipo Fabricante");
         add(btnType_fabricante);
 
         btnType_tecnico = new JButton("Registar Técnico");
         btnType_tecnico.setBounds(50, 100, 200, 30);
+        btnType_tecnico.setToolTipText("Registar um utilizador do tipo Técnico");
         btnType_tecnico.addActionListener(this);
         add(btnType_tecnico);
 

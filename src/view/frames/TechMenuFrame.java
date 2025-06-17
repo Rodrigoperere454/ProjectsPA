@@ -30,8 +30,8 @@ public class TechMenuFrame extends JFrame implements ActionListener {
             "Ver Certificações",
             "Inspecionar Equipamento",
             "Aceitar/Negar Certificação",
-            "Alterar Minhas Infos",
-            "Cancelar Certificação",
+            "Arquivar Certificação",
+            "Observações",
             "Logout"
     };
 
@@ -132,7 +132,11 @@ public class TechMenuFrame extends JFrame implements ActionListener {
                             JOptionPane.showMessageDialog(this, "Pedido de remoção de conta enviado com sucesso!");
                         }
                         break;
-
+                    case 3:
+                        TechPanel certPanel = new TechPanel("ver_certificacoes", cardLayout, mainPanel);
+                        mainPanel.add(certPanel, "ver_certificacoes");
+                        cardLayout.show(mainPanel, "ver_certificacoes");
+                        break;
                     case 4:
                         TechPanel insp_equiPanel = new TechPanel("insp_equi", cardLayout, mainPanel);
                         mainPanel.add(insp_equiPanel, "insp_equi");
@@ -142,6 +146,16 @@ public class TechMenuFrame extends JFrame implements ActionListener {
                         TechPanel aceitarPanel = new TechPanel("aceitar_cert", cardLayout, mainPanel);
                         mainPanel.add(aceitarPanel, "aceitar_cert");
                         cardLayout.show(mainPanel, "aceitar_cert");
+                        break;
+                    case 6:
+                        TechPanel cancelarPanel = new TechPanel("cancel_cert", cardLayout, mainPanel);
+                        mainPanel.add(cancelarPanel, "cancel_cert");
+                        cardLayout.show(mainPanel, "cancel_cert");
+                        break;
+                    case 7:
+                        TechPanel observacoesPanel = new TechPanel("observacoes", cardLayout, mainPanel);
+                        mainPanel.add(observacoesPanel, "observacoes");
+                        cardLayout.show(mainPanel, "observacoes");
                         break;
                     case 8:
                         int response = JOptionPane.showConfirmDialog(this, "Tem a certeza que deseja fazer logout?", "Logout", JOptionPane.YES_NO_OPTION);

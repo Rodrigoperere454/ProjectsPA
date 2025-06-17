@@ -41,6 +41,7 @@ public class TypeRegistar extends JDialog implements ActionListener {
 
         field_nome = new JTextField();
         field_nome.setBounds(120, 20, 200, 25);
+        field_nome.setToolTipText("Insira o seu nome");
         add(field_nome);
 
         JLabel label_username = new JLabel("Username:");
@@ -49,6 +50,7 @@ public class TypeRegistar extends JDialog implements ActionListener {
 
         field_username = new JTextField();
         field_username.setBounds(120, 60, 200, 25);
+        field_username.setToolTipText("Insira o seu username");
         add(field_username);
 
         JLabel label_password = new JLabel("Password:");
@@ -57,6 +59,7 @@ public class TypeRegistar extends JDialog implements ActionListener {
 
         field_password = new JTextField();
         field_password.setBounds(120, 100, 200, 25);
+        field_password.setToolTipText("Insira a sua password");
         add(field_password);
 
         JLabel label_email = new JLabel("Email:");
@@ -65,6 +68,7 @@ public class TypeRegistar extends JDialog implements ActionListener {
 
         field_email = new JTextField();
         field_email.setBounds(120, 140, 200, 25);
+        field_email.setToolTipText("Insira o seu email");
         add(field_email);
 
         if (type.equalsIgnoreCase("tecnico") || type.equalsIgnoreCase("fabricante")) {
@@ -74,6 +78,7 @@ public class TypeRegistar extends JDialog implements ActionListener {
 
             field_nif = new JTextField();
             field_nif.setBounds(120, 180, 200, 25);
+            field_nif.setToolTipText("Insira o seu NIF");
             add(field_nif);
 
             JLabel label_telefone = new JLabel("Telefone:");
@@ -82,6 +87,7 @@ public class TypeRegistar extends JDialog implements ActionListener {
 
             field_telefone = new JTextField();
             field_telefone.setBounds(120, 220, 200, 25);
+            field_telefone.setToolTipText("Insira o seu telefone");
             add(field_telefone);
 
             JLabel label_morada = new JLabel("Morada:");
@@ -90,6 +96,7 @@ public class TypeRegistar extends JDialog implements ActionListener {
 
             field_morada = new JTextField();
             field_morada.setBounds(120, 260, 200, 25);
+            field_morada.setToolTipText("Insira a sua morada");
             add(field_morada);
         }
 
@@ -101,6 +108,7 @@ public class TypeRegistar extends JDialog implements ActionListener {
 
             field_sector_comercial = new JTextField();
             field_sector_comercial.setBounds(160, 300, 160, 25);
+            field_sector_comercial.setToolTipText("Insira o sector comercial do fabricante");
             add(field_sector_comercial);
         }
 
@@ -112,6 +120,7 @@ public class TypeRegistar extends JDialog implements ActionListener {
 
             field_area_especializacao = new JTextField();
             field_area_especializacao.setBounds(160, 300, 160, 25);
+            field_area_especializacao.setToolTipText("Insira a área de especialização do técnico");
             add(field_area_especializacao);
 
             JLabel label_nivel_certificacao = new JLabel("Nível Certificação:");
@@ -120,6 +129,7 @@ public class TypeRegistar extends JDialog implements ActionListener {
 
             field_nivel_certificacao = new JTextField();
             field_nivel_certificacao.setBounds(160, 340, 160, 25);
+            field_nivel_certificacao.setToolTipText("Insira o nível de certificação do técnico (número inteiro)");
             add(field_nivel_certificacao);
         }
 
@@ -128,11 +138,13 @@ public class TypeRegistar extends JDialog implements ActionListener {
         botao_registar = new JButton("Registar");
         botao_registar.setBounds(50, 380, 100, 30);
         botao_registar.addActionListener(this);
+        botao_registar.setToolTipText("Registar o utilizador");
         add(botao_registar);
 
         botao_cancelar = new JButton("Cancelar");
         botao_cancelar.setBounds(200, 380, 100, 30);
         botao_cancelar.addActionListener(e -> dispose());
+        botao_cancelar.setToolTipText("Cancelar e fechar o diálogo");
         add(botao_cancelar);
 
     }

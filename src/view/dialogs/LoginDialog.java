@@ -38,6 +38,7 @@ public class LoginDialog extends JDialog implements ActionListener {
 
         field_username = new JTextField();
         field_username.setBounds(100, 20, 160, 25);
+        field_username.setToolTipText("Insira o seu username");
         add(field_username);
 
         JLabel passwordLabel = new JLabel("Password:");
@@ -46,16 +47,19 @@ public class LoginDialog extends JDialog implements ActionListener {
 
         field_password = new JPasswordField();
         field_password.setBounds(100, 60, 160, 25);
+        field_password.setToolTipText("Insira a sua password");
         add(field_password);
 
         botao_login = new JButton("Login");
         botao_login.setBounds(50, 100, 80, 25);
         botao_login.addActionListener(this);
+        botao_login.setToolTipText("Entrar na conta");
         add(botao_login);
 
         botao_cancelar = new JButton("Cancel");
         botao_cancelar.setBounds(150, 100, 80, 25);
         botao_cancelar.addActionListener(this);
+        botao_cancelar.setToolTipText("Voltar ao menu principal");
         add(botao_cancelar);
     }
 

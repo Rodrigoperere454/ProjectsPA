@@ -54,10 +54,6 @@ public class TechPanel extends JPanel implements ActionListener {
                 add(Box.createVerticalStrut(20));
                 add(voltarButton);
                 break;
-            case "rem_conta":
-                break;
-            case "ver_not":
-                break;
             case "insp_equi":
                 JLabel label_titulo_equip = new JLabel("Certificar Equipamentos");
                 label_titulo_equip.setBounds(20, 0, 200, 25);
@@ -211,9 +207,85 @@ public class TechPanel extends JPanel implements ActionListener {
                 );
                 add(botao_testes);
                 break;
-            case "alterar_info":
+            case "ver_certificacoes":
+                JLabel label_titulo_certificacoes = new JLabel("Certificações Realizadas");
+                label_titulo_certificacoes.setAlignmentX(Component.CENTER_ALIGNMENT);
+                add(label_titulo_certificacoes);
+
+                Certificacao[] certificacoes = DB.listarCerteficacaoTecnicoInterface(user.getId());
+                String[] columnNames_certificacoes = {"ID", "ID Equipamento", "Estado", "Data Realização", "Número Certificação", "Custo"};
+                Object[][] data_certificacoes = new Object[certificacoes.length][columnNames_certificacoes.length];
+                for(int i = 0; i < certificacoes.length; i++){
+                    data_certificacoes[i][0] = certificacoes[i].getId();
+                    data_certificacoes[i][1] = certificacoes[i].getId_equipamento();
+                    data_certificacoes[i][2] = certificacoes[i].getEstado();
+                    data_certificacoes[i][3] = certificacoes[i].getData_realizacao();
+                    data_certificacoes[i][4] = certificacoes[i].getNumero_certificacao();
+                    data_certificacoes[i][5] = certificacoes[i].getCusto();
+                }
+
+                JTable table_certificacoes = new JTable(data_certificacoes, columnNames_certificacoes);
+                JScrollPane scrollPaneCertificacoes = new JScrollPane(table_certificacoes);
+                scrollPaneCertificacoes.setPreferredSize(new Dimension(500, 300));
+                add(scrollPaneCertificacoes);
+
+                JButton voltarButton_cert = new JButton("Voltar");
+                voltarButton_cert.setAlignmentX(Component.CENTER_ALIGNMENT);
+                voltarButton_cert.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
+                voltarButton_cert.setToolTipText("Voltar ao menu principal");
+                add(Box.createVerticalStrut(20));
+                add(voltarButton_cert);
                 break;
+
             case "cancel_cert":
+                JLabel label_titulo_cancelar = new JLabel("Arquivar Certificações");
+                label_titulo_cancelar.setAlignmentX(Component.CENTER_ALIGNMENT);
+                add(label_titulo_cancelar);
+                Certificacao[] certificacoes_cancelar = DB.listarCerteficacaoTecnicoInterface(user.getId());
+                String[] columnNames_certificacoes_cancelar = {"ID", "ID Equipamento", "Estado", "Data Realização", "Número Certificação", "Custo"};
+                Object[][] data_certificacoes_cancelar = new Object[certificacoes_cancelar.length][columnNames_certificacoes_cancelar.length];
+                for(int i = 0; i < certificacoes_cancelar.length; i++){
+                    data_certificacoes_cancelar[i][0] = certificacoes_cancelar[i].getId();
+                    data_certificacoes_cancelar[i][1] = certificacoes_cancelar[i].getId_equipamento();
+                    data_certificacoes_cancelar[i][2] = certificacoes_cancelar[i].getEstado();
+                    data_certificacoes_cancelar[i][3] = certificacoes_cancelar[i].getData_realizacao();
+                    data_certificacoes_cancelar[i][4] = certificacoes_cancelar[i].getNumero_certificacao();
+                    data_certificacoes_cancelar[i][5] = certificacoes_cancelar[i].getCusto();
+                }
+
+                JTable table_certificacoes_cancelar = new JTable(data_certificacoes_cancelar, columnNames_certificacoes_cancelar);
+                JScrollPane scrollPaneCertificacoes_cancelar = new JScrollPane(table_certificacoes_cancelar);
+                scrollPaneCertificacoes_cancelar.setPreferredSize(new Dimension(500, 300));
+                add(scrollPaneCertificacoes_cancelar);
+
+                JButton voltarButton_cancelar = new JButton("Voltar");
+                voltarButton_cancelar.setAlignmentX(Component.CENTER_ALIGNMENT);
+                voltarButton_cancelar.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
+                voltarButton_cancelar.setToolTipText("Voltar ao menu principal");
+                add(voltarButton_cancelar);
+
+                JButton botao_cancelar_cert = new JButton("Arquivar Certificação");
+                botao_cancelar_cert.setAlignmentX(Component.CENTER_ALIGNMENT);
+                botao_cancelar_cert.addActionListener(
+                        new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+                                if(table_certificacoes_cancelar.getSelectedRow() == -1){
+                                    JOptionPane.showMessageDialog(mainPanel, "Nenhuma Certificação selecionada, selecione uma certificação para arquivar.");
+                                } else {
+                                    int id_certificacao = (int) table_certificacoes_cancelar.getValueAt(table_certificacoes_cancelar.getSelectedRow(), 0);
+                                    int certeza = JOptionPane.showConfirmDialog(mainPanel, "Tem a certeza que deseja arquivar a certificação " + id_certificacao + "?", "Arquivar Certificação", JOptionPane.YES_NO_OPTION);
+                                    if (certeza == JOptionPane.YES_OPTION) {
+                                        DB.enviarNotificacao(user.getId(), "Arquivar Certificação - ID: " + id_certificacao, "tecnico", "Gestores");
+                                        JOptionPane.showMessageDialog(mainPanel, "Uma notificação foi enviada para um gestor para arquivar a certificação.");
+                                    } else {
+                                        JOptionPane.showMessageDialog(mainPanel, "Operação cancelada!");
+                                    }
+                                }
+                            }
+                        }
+                );
+                add(botao_cancelar_cert);
+
                 break;
         }
     }

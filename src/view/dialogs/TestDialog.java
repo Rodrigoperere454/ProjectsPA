@@ -34,6 +34,7 @@ public class TestDialog extends JDialog implements ActionListener {
 
         field_designacao = new JTextField();
         field_designacao.setBounds(120, 20, 200, 25);
+        field_designacao.setToolTipText("Insira o nome do teste");
         add(field_designacao);
 
         JLabel label_descricao = new JLabel("Descricao do Teste:");
@@ -42,6 +43,7 @@ public class TestDialog extends JDialog implements ActionListener {
 
         field_descricao = new JTextField();
         field_descricao.setBounds(120, 60, 200, 25);
+        field_descricao.setToolTipText("Insira a descrição do teste");
         add(field_descricao);
 
         JLabel label_valor = new JLabel("Valor:");
@@ -50,16 +52,19 @@ public class TestDialog extends JDialog implements ActionListener {
 
         field_valor = new JTextField();
         field_valor.setBounds(120, 100, 200, 25);
+        field_valor.setToolTipText("Insira o valor do teste (número inteiro)");
         add(field_valor);
 
 
         botao_teste = new JButton("Realizar Teste");
         botao_teste.setBounds(50, 380, 100, 30);
         botao_teste.addActionListener(this);
+        botao_teste.setToolTipText("Registar o teste realizado");
         add(botao_teste);
 
         botao_cancelar = new JButton("Cancelar");
         botao_cancelar.setBounds(200, 380, 100, 30);
+        botao_cancelar.setToolTipText("Cancelar e fechar o diálogo");
         botao_cancelar.addActionListener(e -> dispose());
         add(botao_cancelar);
 

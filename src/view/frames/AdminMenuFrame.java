@@ -4,6 +4,7 @@ import controller.DBController;
 import controller.DBconfig;
 import model.Utilizador;
 import utils.Session;
+import view.dialogs.ObservationDialog;
 import view.dialogs.TypeRegistar;
 import view.panels.GestorPanel;
 import view.panels.ImagePanel;
@@ -20,18 +21,12 @@ public class AdminMenuFrame extends JFrame implements ActionListener {
     private String[] labels = {
             "Registar Gestor",
             "Listar Utilizadores",
-            "Pesquisar Utilizadores",
             "Ver Notificações",
             "Ver Certificações",
-            "Pesquisar Pedidos",
-            "Ver Estado de uma Certificação",
             "Aceitar/Recusar Utilizador",
-            "Remover Conta",
             "Aceitar Pedido de Certificação",
-            "Adicionar Licença",
-            "Atribuir Licença a Certificação",
-            "Alterar Informações de Utilizadores",
-            "Ver Logs da Aplicação",
+            "Arquivar Certificação",
+            "Observações",
             "Logout",
     };
 
@@ -51,6 +46,7 @@ public class AdminMenuFrame extends JFrame implements ActionListener {
         // Criar CardLayout e painel principal
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
+
 
         // Painel de conteúdo vertical com BoxLayout
         JPanel contentPanel = new JPanel();
@@ -138,34 +134,38 @@ public class AdminMenuFrame extends JFrame implements ActionListener {
                         mainPanel.add(listarUtilizadoresPanel, "listar_utilizadores");
                         cardLayout.show(mainPanel, "listar_utilizadores");
                         break;
-                    case 2:  break;
-                    case 3:
+                    case 2:
                         GestorPanel notificationsPanel= new GestorPanel("notificacao", cardLayout, mainPanel);
                         mainPanel.add(notificationsPanel, "notificacao");
                         cardLayout.show(mainPanel, "notificacao");
                         break;
-                    case 4:
-
+                    case 3:
+                        GestorPanel listCert = new GestorPanel("list_cert", cardLayout, mainPanel);
+                        mainPanel.add(listCert, "list_cert");
+                        cardLayout.show(mainPanel, "list_cert");
                         break;
-                    case 5:  break;
-                    case 6:  break;
-                    case 7:
+                    case 4:
                         GestorPanel aceitarPanel = new GestorPanel("aceitar", cardLayout, mainPanel);
                         mainPanel.add(aceitarPanel, "aceitar");
                         cardLayout.show(mainPanel, "aceitar");
                         break;
-                    case 8:
-
-                    case 9:
+                    case 5:
                         GestorPanel aceitar_certe_panel = new GestorPanel("aceitar_certe", cardLayout, mainPanel);
                         mainPanel.add(aceitar_certe_panel, "aceitar_certe");
                         cardLayout.show(mainPanel, "aceitar_certe");
                         break;
-                    case 10:  break;
-                    case 11: break;
-                    case 12:  break;
-                    case 13:  break;
-                    case 14:
+                    case 6:
+                        GestorPanel arquivarPanel = new GestorPanel("arquivar_cert", cardLayout, mainPanel);
+                        mainPanel.add(arquivarPanel, "arquivar_cert");
+                        cardLayout.show(mainPanel, "arquivar_cert");
+                        break;
+                    case 7:
+                        ObservationDialog dialog = new ObservationDialog(AdminMenuFrame.this, "Menu Administrador");
+                        dialog.setSize(400, 200);
+                        dialog.setLocationRelativeTo(AdminMenuFrame.this);
+                        dialog.setVisible(true);
+                        break;
+                    case 8:
                         int response = JOptionPane.showConfirmDialog(this, "Tem a certeza que deseja fazer logout?", "Logout", JOptionPane.YES_NO_OPTION);
                         if (response == JOptionPane.YES_OPTION) {
                             dispose();
