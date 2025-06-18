@@ -3,6 +3,8 @@ package view.frames;
 import controller.DBController;
 import controller.DBconfig;
 import model.Utilizador;
+import utils.LogFileManager;
+import utils.Printer;
 import utils.Session;
 import view.dialogs.ObservationDialog;
 import view.dialogs.TypeRegistar;
@@ -89,6 +91,16 @@ public class AdminMenuFrame extends JFrame implements ActionListener {
             contentPanel.add(Box.createVerticalStrut(10));
         }
 
+        JButton printButton = new JButton("Imprimir Logs");
+        printButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+        printButton.setMaximumSize(new Dimension(300, 40));
+        printButton.addActionListener(e -> {
+            Printer.printExtract(LogFileManager.readLogFile());
+            JOptionPane.showMessageDialog(this, "Logs impressos com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        });
+        contentPanel.add(printButton);
+        contentPanel.add(Box.createVerticalStrut(10));
+
         // Adiciona o painel de conteúdo ao mainPanel com CardLayout
         mainPanel.add(contentPanel, "menu");
 
@@ -167,6 +179,11 @@ public class AdminMenuFrame extends JFrame implements ActionListener {
                         break;
                     case 8:
                         int response = JOptionPane.showConfirmDialog(this, "Tem a certeza que deseja fazer logout?", "Logout", JOptionPane.YES_NO_OPTION);
+                        int response2 = JOptionPane.showConfirmDialog(this, "Deseja apagar os logs desta Sessão?", "Apagar Logs", JOptionPane.YES_NO_OPTION);
+                        if (response2 == JOptionPane.YES_OPTION) {
+                            LogFileManager.clearLogFile();
+                            JOptionPane.showMessageDialog(this, "Logs apagados com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                        }
                         if (response == JOptionPane.YES_OPTION) {
                             dispose();
                             JFrame newInitialMenu = new InicialMenuFrame();

@@ -2,6 +2,7 @@ package utils;
 
 import model.Utilizador;
 
+
 public class Session {
     private static Utilizador utilizadorAutenticado;
 

@@ -7,8 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.security.MessageDigest;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,12 +15,50 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Random;
+import java.util.logging.Logger;
+
+import utils.LoggerLoader;
 
 public class DBController {
     private Connection conexao;
     Scanner scanner = new Scanner(System.in);
     public DBController(Connection conexao) {
         this.conexao = conexao;
+    }
+    Logger logger = LoggerLoader.getLogger();
+
+    public List<Log> getLogs(String username) {
+        List<Log> logs = new ArrayList<>();
+        String sql = "SELECT * FROM logs WHERE user_username = ? ORDER BY data DESC";
+
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Timestamp dataHora = rs.getTimestamp("data_hora");
+                String descricao = rs.getString("acao");
+                Log log = new Log(username, descricao);
+                logs.add(log);
+            }
+        } catch (SQLException e) {
+            System.err.println("\033[31mErro ao obter logs: \033[0m" + e.getMessage());
+        }
+        return logs;
+    }
+
+    public boolean enviarLog(Log log){
+        String sql = "INSERT INTO logs (user_username, acao) VALUES (?, ?)";
+        try(PreparedStatement stmt = conexao.prepareStatement(sql)){
+            stmt.setString(1, log.getUsername());
+            stmt.setString(2, log.getAcao());
+
+            stmt.executeUpdate();
+            return true;
+        }catch (SQLException e){
+            System.err.println("\033[31mErro ao enviar log: \033[0m" + e.getMessage());
+            return false;
+        }
     }
 
     /**
@@ -133,6 +169,9 @@ public class DBController {
                     }
                 }
             } while (skuExiste);
+            Log log = new Log(Integer.toString(equipamento.getId_user()), "Equipamento adicionado com sucesso. SKU: " + codigo_sku_random);
+            enviarLog(log);
+            logger.info("Equipamento adicionado com sucesso. SKU: " + codigo_sku_random);
 
         } catch (SQLException e) {
             System.err.println("\033[31mErro ao verificar código SKU: \033[0m" + e.getMessage());
@@ -447,6 +486,9 @@ public class DBController {
                     System.out.println("\033[31mConta inativa. Por favor, contacte um gestor.\033[0m");
                     return null;
                 }
+                Log log = new Log(username, "Login efetuado com sucesso.");
+                enviarLog(log);
+                logger.info("Login efetuado com sucesso. Utilizador: " + username);
                 return new Utilizador(id, nome, username, email, tipo);
 
             } else {
@@ -470,6 +512,8 @@ public class DBController {
         try(PreparedStatement stmt = conexao.prepareStatement(sql)){
             stmt.setInt(1, user_id);
             int linhasAfetadas = stmt.executeUpdate();
+            Log log = new Log("Admin", "Utilizador com id: " + user_id + " ativado.");
+            enviarLog(log);
             return linhasAfetadas > 0;
         } catch (SQLException e) {
             System.err.println("\033[31mErro ao ativar utilizador: \033[0m" + e.getMessage());
@@ -512,6 +556,10 @@ public class DBController {
             stmt.setString(5, certeficacao.getEstado());
 
             int linhasAfetadas = stmt.executeUpdate();
+            String id_tecnico = Integer.toString(certeficacao.getId_tecnico());
+            Log log = new Log(id_tecnico, "Pedido de certificação enviado para o equipamento com id: " + certeficacao.getId_equipamento());
+            enviarLog(log);
+            logger.info("Pedido de certificação enviado para o equipamento com id: " + certeficacao.getId_equipamento());
             return linhasAfetadas > 0;
         }catch(SQLException e){
             System.err.println("\033[31mErro ao enviar certeficação: \033[0m" + e.getMessage());
@@ -673,6 +721,9 @@ public class DBController {
             stmt.setInt(3, id_certificacao);
             stmt.setInt(4, id_certificacao);
             int linhasAfetadas = stmt.executeUpdate();
+            Log log = new Log(Integer.toString(id_tecnico), "Pedido de certificação com id: " + id_certificacao + " aceite.");
+            enviarLog(log);
+            logger.info("Pedido de certificação com id: " + id_certificacao + " aceite.");
             return linhasAfetadas > 0;
 
         }catch(SQLException e){
@@ -737,6 +788,9 @@ public class DBController {
             stmt.setString(6, utilizador.getType());
 
             int rowsInserted = stmt.executeUpdate();
+            Log log = new Log(Integer.toString(utilizador.getId()), "Inserido com sucesso.");
+            enviarLog(log);
+            logger.info("Utilizador inserido com sucesso. ID: " + utilizador.getId());
             return rowsInserted > 0;
 
         } catch (SQLException e) {
@@ -820,6 +874,9 @@ public class DBController {
                 int idGerado = rs.getInt("id");
                 fabricante.setId(idGerado);
                 enviarNotificacao(idGerado, "Pedido de Registo de Conta", "fabricante", "Gestores");
+                Log log = new Log(Integer.toString(idGerado), "Fabricante inserido com sucesso.");
+                enviarLog(log);
+                logger.info("Fabricante inserido com sucesso. ID: " + idGerado);
                 return true;
             }
         } catch (SQLException e) {
@@ -854,6 +911,9 @@ public class DBController {
                 int idGerado = rs.getInt("id");
                 tecnico.setId(idGerado);
                 enviarNotificacao(idGerado, "Pedido de Registo de Conta", "tecnico", "Gestores");
+                Log log = new Log(Integer.toString(idGerado), "Técnico inserido com sucesso.");
+                enviarLog(log);
+                logger.info("Técnico inserido com sucesso. ID: " + idGerado);
                 return true;
             }
 

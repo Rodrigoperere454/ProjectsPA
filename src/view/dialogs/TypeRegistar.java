@@ -3,6 +3,7 @@ package view.dialogs;
 import controller.DBController;
 import controller.DBconfig;
 import model.*;
+import utils.MailSender;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -172,6 +173,9 @@ public class TypeRegistar extends JDialog implements ActionListener {
                     boolean sucesso_inserirTecnico = DB.inserirTecnico(tecnico);
                     if (sucesso_inserirTecnico) {
                         JOptionPane.showMessageDialog(this, "Técnico registado com sucesso!");
+                        String subject = "Registo de Técnico";
+                        String message = "Olá " + nome + ",\n\nO seu registo como técnico foi efetuado com sucesso!\n\nAtenciosamente,\nA equipa.";
+                        MailSender.sendEmail(email.trim(), subject, message);
                         dispose();
                     } else {
                         JOptionPane.showMessageDialog(this, "Erro ao registar Técnico.");
@@ -195,6 +199,9 @@ public class TypeRegistar extends JDialog implements ActionListener {
                     boolean secesso_inserirFabricante = DB.inserirFabricante(fabricante);
                     if (secesso_inserirFabricante) {
                         JOptionPane.showMessageDialog(this, "Fabricante registado com sucesso!");
+                        String subject = "Registo de Fabricante";
+                        String message = "Olá " + nome + ",\n\nO seu registo como fabricante foi efetuado com sucesso!\n\nAtenciosamente,\nA equipa.";
+                        MailSender.sendEmail(email.trim(), subject, message);
                         dispose();
                     } else {
                         JOptionPane.showMessageDialog(this, "Erro ao registar Fabricante.");
@@ -215,6 +222,9 @@ public class TypeRegistar extends JDialog implements ActionListener {
                     boolean inserir_sucessoUtilizador = DB.inserirUtilizador(gestor);
                     if (inserir_sucessoUtilizador) {
                         JOptionPane.showMessageDialog(this, "Gestor registado com sucesso!");
+                        String subject = "Registo de Gestor";
+                        String message = "Olá " + nome + ",\n\nO seu registo como gestor foi efetuado com sucesso!\n\nAtenciosamente,\nA equipa Luis&Rodri.Ltd.";
+                        MailSender.sendEmail(email, subject, message);
                         dispose();
                     } else {
                         JOptionPane.showMessageDialog(this, "Erro ao registar Gestor.");
