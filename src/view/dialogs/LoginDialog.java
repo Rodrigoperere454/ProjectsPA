@@ -12,7 +12,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 
-
+/**
+ * Classe que representa um diálogo de login para autenticação de utilizadores.
+ * Permite que os utilizadores insiram o seu nome de utilizador e senha para aceder ao sistema.
+ * Dependendo do tipo de utilizador, redireciona para o menu apropriado (técnico, fabricante ou administrador).
+ */
 public class LoginDialog extends JDialog implements ActionListener {
 
     Connection conexao = DBconfig.getConnection();
@@ -63,7 +67,14 @@ public class LoginDialog extends JDialog implements ActionListener {
         add(botao_cancelar);
     }
 
-
+    /**
+     * Método que trata os eventos de ação dos botões de login e cancelar.
+     * Se o botão de login for pressionado, tenta autenticar o utilizador.
+     * Se o botão de cancelar for pressionado, fecha o diálogo.
+     *
+     * @param e Evento de ação
+     */
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(botao_login)) {
             String username = field_username.getText();

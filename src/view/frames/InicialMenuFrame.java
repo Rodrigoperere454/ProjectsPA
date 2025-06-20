@@ -9,6 +9,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 
+/**
+ * Classe que representa o menu inicial da aplicação.
+ * Permite ao utilizador escolher entre fazer login, registar um novo utilizador,
+ * alterar os dados da base de dados ou sair da aplicação.
+ */
 public class InicialMenuFrame extends JFrame implements ActionListener {
     private Container cont;
     private JButton btn_login, btn_registar, btn_db, btn_sair;

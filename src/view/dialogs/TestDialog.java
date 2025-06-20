@@ -9,6 +9,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 
+/**
+ * Classe que representa um diálogo para registar um teste realizado em um equipamento.
+ * Permite ao utilizador inserir os detalhes do teste, como designação, descrição e valor.
+ */
 public class TestDialog extends JDialog implements ActionListener {
 
     Connection conexao = DBconfig.getConnection();
@@ -70,6 +74,11 @@ public class TestDialog extends JDialog implements ActionListener {
 
     }
 
+    /**
+     * Método que trata os eventos de ação dos botões.
+     * Se o botão "Realizar Teste" for pressionado, valida os campos e adiciona o teste ao banco de dados.
+     */
+    @Override
     public void actionPerformed(ActionEvent e){
         if (e.getSource() == botao_teste){
             int valor = 0;

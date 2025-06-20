@@ -16,13 +16,20 @@ import java.sql.Connection;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
-
+/**
+ * Classe que representa um painel de imagem de perfil do utilizador.
+ * Permite carregar uma imagem de perfil do utilizador e alterá-la ao clicar.
+ */
 public class ImagePanel extends JPanel {
     private static final String IMAGE_FOLDER = "public/imgs/user/profile/";
     private BufferedImage image;
     private final String username;
     private Image scaledImage;
 
+    /**
+     * Construtor da classe ImagePanel.
+     * Carrega a imagem de perfil do utilizador logado e configura o clique para alterar a imagem.
+     */
     public ImagePanel() {
         Utilizador loggedUser = Session.getUtilizador();
         this.username = loggedUser.getUsername();
@@ -30,6 +37,11 @@ public class ImagePanel extends JPanel {
         configurarCliqueParaAlterarImagem();
     }
 
+    /**
+     * Função que carrega a imagem inicial do utilizador.
+     * Tenta carregar a imagem do perfil do utilizador a partir da base de dados.
+     * Se não conseguir, carrega uma imagem padrão.
+     */
     private void carregarImagemInicial() {
         try {
             Connection connection = DBconfig.getConnection();
@@ -50,6 +62,10 @@ public class ImagePanel extends JPanel {
         }
     }
 
+    /**
+     * Função que carrega uma imagem padrão caso não consiga carregar a imagem do perfil do utilizador.
+     * A imagem padrão é carregada de um caminho fixo.
+     */
     private void carregarImagemDefault() {
         try {
             image = ImageIO.read(new File("public/imgs/user/profile/default_profile_img.png"));
@@ -61,6 +77,10 @@ public class ImagePanel extends JPanel {
         }
     }
 
+    /**
+     * Configura o clique no painel para permitir ao utilizador escolher uma nova imagem de perfil.
+     * Ao clicar, abre um JFileChooser para selecionar uma nova imagem.
+     */
     private void configurarCliqueParaAlterarImagem() {
         this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         this.addMouseListener(new MouseAdapter() {
@@ -71,7 +91,12 @@ public class ImagePanel extends JPanel {
         });
     }
 
-    //
+    /**
+     * Função que carrega uma nova imagem de perfil a partir de um caminho fornecido.
+     * Copia a imagem para uma pasta específica e atualiza a base de dados com o novo caminho.
+     *
+     * @param originalPath Caminho original da imagem a ser carregada.
+     */
     private void loadImage(String originalPath) {
         try {
             // Define caminho de destino com nome baseado no username
@@ -103,6 +128,10 @@ public class ImagePanel extends JPanel {
         }
     }
 
+    /**
+     * Função que abre um JFileChooser para o utilizador escolher uma nova imagem de perfil.
+     * Se o utilizador escolher uma imagem, chama a função loadImage para processar a nova imagem.
+     */
     private void escolherNovaImagem() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Escolher nova imagem de perfil");
@@ -116,6 +145,10 @@ public class ImagePanel extends JPanel {
         }
     }
 
+    /**
+     * Método que retorna a imagem atual do painel.
+     * @return A imagem atual do painel.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

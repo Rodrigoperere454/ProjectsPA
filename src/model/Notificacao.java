@@ -2,6 +2,10 @@ package model;
 
 import java.sql.Timestamp;
 
+/**
+ * Classe que representa uma notificação no sistema.
+ * Contém informações sobre a data/hora, utilizador, descrição, tipo, encarregado e se foi lida.
+ */
 public class Notificacao {
     private Timestamp dataHora;
     private int idUtilizador;

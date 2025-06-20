@@ -11,6 +11,10 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * Classe que representa um diálogo para registar um utilizador do tipo especificado (tecnico, fabricante ou gestor).
+ * Permite inserir os dados necessários e registar o utilizador no sistema.
+ */
 public class TypeRegistar extends JDialog implements ActionListener {
 
     Connection conexao = DBconfig.getConnection();
@@ -30,6 +34,12 @@ public class TypeRegistar extends JDialog implements ActionListener {
     private JTextField field_nivel_certificacao;
     private JTextField field_type;
 
+    /**
+     * Construtor da classe TypeRegistar.
+     * Cria um diálogo para registar um utilizador do tipo especificado (tecnico, fabricante ou gestor).
+     *
+     * @param type Tipo de utilizador a ser registado (tecnico, fabricante ou gestor)
+     */
     public TypeRegistar(String type) {
         setTitle("Registar Type");
         setLayout(null);
@@ -150,6 +160,13 @@ public class TypeRegistar extends JDialog implements ActionListener {
 
     }
 
+    /**
+     * Método que trata os eventos de ação dos botões.
+     * Dependendo do tipo de utilizador, regista o técnico, fabricante ou gestor.
+     * Exibe mensagens de sucesso ou erro conforme necessário.
+     *
+     * @param e Evento de ação
+     */
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == botao_registar) {
             System.out.println(field_type.getText());

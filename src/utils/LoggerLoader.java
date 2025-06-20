@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.logging.*;
 
 /**
- * Class to load the logger and create a log file
+ * Classe responsável por carregar e configurar o logger da aplicação.
  */
 public class LoggerLoader {
     private static Logger logger;
@@ -25,8 +25,8 @@ public class LoggerLoader {
     }
 
     /**
-     * Get the logger instance.
-     * @return the logger instance
+     * Obtém o logger configurado para a aplicação.
+     * @return O logger configurado.
      */
     public static Logger getLogger() {
         return logger;

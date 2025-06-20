@@ -2,17 +2,21 @@ package model;
 
 import java.time.LocalDateTime;
 
+/**
+ * Classe que representa um log de ações do utilizador.
+ * Contém informações sobre o utilizador, a ação realizada e a data/hora da ação.
+ */
 public class Log {
     private String username;
     private String acao;
-    private LocalDateTime dataHora;
+    private String dataHora;
 
     public Log(String username, String acao) {
         this.username = username;
         this.acao = acao;
     }
 
-    public Log(String username, String acao, LocalDateTime dataHora) {
+    public Log(String username, String acao, String dataHora) {
         this.username = username;
         this.acao = acao;
         this.dataHora = dataHora;
@@ -26,7 +30,7 @@ public class Log {
         return acao;
     }
 
-    public LocalDateTime getDataHora() {
+    public String getDataHora() {
         return dataHora;
     }
 }

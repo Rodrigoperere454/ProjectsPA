@@ -2,6 +2,10 @@ package model;
 import java.time.LocalDate;
 import java.util.Date;
 
+/**
+ * Classe que representa um Fabricante, que é um tipo de Utilizador.
+ * Contém informações específicas do fabricante, como NIF, telefone, morada, setor comercial e data de início.
+ */
 public class Fabricante extends Utilizador {
 
     private String nif;
@@ -19,8 +23,6 @@ public class Fabricante extends Utilizador {
         this.sector_comercial = sector_comercial;
         this.data_inicio = data;
     }
-
-
 
     public String getNif() {
         return nif;

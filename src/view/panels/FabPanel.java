@@ -15,6 +15,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 
+/**
+ * FabPanel é um painel que exibe diferentes funcionalidades para o fabricante,
+ * como listar equipamentos, pedir certificação, ver pedidos feitos e verificar o estado da certificação.
+ * Ele utiliza um CardLayout para alternar entre diferentes visualizações com base na ação do utilizador
+ */
 public class FabPanel extends JPanel implements ActionListener {
     private CardLayout cardLayout;
     private JPanel mainPanel;

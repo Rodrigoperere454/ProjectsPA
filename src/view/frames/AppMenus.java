@@ -1,5 +1,8 @@
 package view.frames;
 
+/**
+ * Classe que contém os menus da aplicação
+ */
 public class AppMenus {
 
     /**

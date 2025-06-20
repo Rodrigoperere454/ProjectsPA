@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * Classe que representa um utilizador do sistema.
+ * Contém informações sobre o utilizador, como nome, username, password, email, tipo, estado, NIF, telefone, morada,
+ * setor comercial, área de especialização e nível de certificação.
+ */
 public class Tecnico extends Utilizador {
     private String nif;
     private String telefone;

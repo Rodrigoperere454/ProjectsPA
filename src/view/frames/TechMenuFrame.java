@@ -14,6 +14,11 @@ import utils.Session;
 import view.dialogs.TypeRegistar;
 import view.panels.*;
 
+/**
+ * Classe que representa o menu do técnico.
+ * Permite ao técnico realizar várias ações, como registar técnicos,
+ * ver notificações, inspecionar equipamentos, aceitar/recusar certificações, etc.
+ */
 public class TechMenuFrame extends JFrame implements ActionListener {
     private final Connection connection = DBconfig.getConnection();
     private final DBController DB = new DBController(connection);
@@ -35,6 +40,11 @@ public class TechMenuFrame extends JFrame implements ActionListener {
             "Logout"
     };
 
+    /**
+     * Construtor da classe TechMenuFrame.
+     * Configura o JFrame, adiciona os botões e painéis necessários,
+     * e define o comportamento ao fechar a janela.
+     */
     public TechMenuFrame() {
         setTitle("Menu Técnico");
         setSize(600, 500);
@@ -108,6 +118,12 @@ public class TechMenuFrame extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    /**
+     * Método que trata os eventos de ação dos botões.
+     * Dependendo do botão clicado, executa a ação correspondente.
+     *
+     * @param e Evento de ação
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();

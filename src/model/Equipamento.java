@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Classe que representa um equipamento.
+ * Contém informações sobre o equipamento, como marca, modelo, setor comercial, potência, amperagem, código SKU e número do modelo.
+ */
 public class Equipamento {
     private int id;
     private int id_user;

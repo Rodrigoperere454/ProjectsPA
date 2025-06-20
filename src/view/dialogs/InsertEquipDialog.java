@@ -10,6 +10,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 
+/**
+ * Classe que representa um diálogo para inserir um novo equipamento.
+ * Permite ao utilizador adicionar detalhes do equipamento, como marca, modelo, setor, potência, amperagem e número do modelo.
+ */
 public class InsertEquipDialog extends JDialog implements ActionListener {
 
     Connection conexao = DBconfig.getConnection();
@@ -106,7 +110,14 @@ public class InsertEquipDialog extends JDialog implements ActionListener {
 
     }
 
-
+    /**
+     * Método que trata os eventos de ação dos botões de adicionar e cancelar.
+     * Se o botão de adicionar for pressionado, tenta adicionar o equipamento com os dados fornecidos.
+     * Se o botão de cancelar for pressionado, fecha o diálogo.
+     *
+     * @param e Evento de ação
+     */
+    @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == cancelar_butao) {
             dispose();

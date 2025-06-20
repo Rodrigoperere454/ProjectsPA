@@ -7,7 +7,17 @@ import jakarta.mail.internet.*;
 import javax.swing.*;
 import java.util.Properties;
 
+/**
+ * Classe responsável pelo envio de emails.
+ * Utiliza a biblioteca Jakarta Mail para enviar emails através do SMTP do Gmail.
+ */
 public class MailSender {
+    /**
+     * Função para enviar um email.
+     * @param to
+     * @param subject
+     * @param body
+     */
     public static void sendEmail(String to, String subject, String body) {
         final String sender = "avacalho881@gmail.com";
         final String password = "yytp frfw jepy ysrb";

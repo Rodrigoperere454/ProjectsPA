@@ -16,6 +16,11 @@ import java.sql.Array;
 import java.sql.Connection;
 import java.util.Arrays;
 
+/**
+ * GestorPanel é um painel que permite ao gestor realizar várias ações, como listar utilizadores,
+ * visualizar notificações, aceitar ou rejeitar registos de utilizadores, aceitar pedidos de certificação,
+ * listar certificações e arquivar certificações.
+ */
 public class GestorPanel extends JPanel implements ActionListener {
     private CardLayout cardLayout;
     private JPanel mainPanel;

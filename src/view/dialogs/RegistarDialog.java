@@ -5,8 +5,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 
+/**
+ * Classe que representa o diálogo de registo de utilizadores.
+ * Permite ao administrador registar diferentes tipos de utilizadores (Gestor, Fabricante, Técnico).
+ */
 public class RegistarDialog extends JDialog implements ActionListener {
-
 
     private JButton btnType_gestor;
     private JButton btnType_fabricante;
@@ -39,6 +42,13 @@ public class RegistarDialog extends JDialog implements ActionListener {
 
     }
 
+    /**
+     * Método que trata os eventos de ação dos botões.
+     * Dependendo do botão clicado, abre o diálogo de registo correspondente.
+     *
+     * @param e Evento de ação
+     */
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(btnType_gestor)) {
             TypeRegistar registar_user = new TypeRegistar("Gestor");

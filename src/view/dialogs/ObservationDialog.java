@@ -11,6 +11,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 
+/**
+ * Classe que representa um diálogo para adicionar uma observação.
+ * Permite ao utilizador inserir o assunto e o texto da observação.
+ */
 public class ObservationDialog extends JDialog implements ActionListener {
 
     Connection conexao = DBconfig.getConnection();
@@ -62,6 +66,14 @@ public class ObservationDialog extends JDialog implements ActionListener {
         add(cancelar_butao);
     }
 
+    /**
+     * Método que trata os eventos de ação dos botões.
+     * Se o botão "Adicionar Observação" for pressionado, valida os campos e adiciona a observação.
+     * Se o botão "Cancelar" for pressionado, fecha o diálogo.
+     *
+     * @param e Evento de ação
+     */
+    @Override
     public void actionPerformed(ActionEvent e){
         if (e.getSource().equals(adicionar_observacao_botao)) {
             String observacao = field_observacao.getText();

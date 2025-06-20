@@ -17,6 +17,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.sql.Connection;
 
+/**
+ * Classe que representa o menu do fabricante.
+ * Permite ao fabricante realizar várias ações, como registar fabricantes,
+ * adicionar equipamentos, pedir certificação, listar equipamentos, etc.
+ */
 public class FabMenuFrame extends JFrame implements ActionListener {
     private final Connection connection = DBconfig.getConnection();
     private final DBController DB = new DBController(connection);

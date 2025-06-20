@@ -19,6 +19,10 @@ import java.util.logging.Logger;
 
 import utils.LoggerLoader;
 
+/**
+ * Classe responsável por controlar as operações de acesso à base de dados.
+ * Contém métodos para inserir, atualizar e consultar dados relacionados a logs, utilizadores, equipamentos, certificações e notificações.
+ */
 public class DBController {
     private Connection conexao;
     Scanner scanner = new Scanner(System.in);
@@ -47,6 +51,11 @@ public class DBController {
         return logs;
     }
 
+    /**
+     * Função para enviar um log para a base de dados. Recebe um objeto do tipo Log e insere na tabela logs.
+     * @param log
+     * @return true or false
+     */
     public boolean enviarLog(Log log){
         String sql = "INSERT INTO logs (user_username, acao) VALUES (?, ?)";
         try(PreparedStatement stmt = conexao.prepareStatement(sql)){

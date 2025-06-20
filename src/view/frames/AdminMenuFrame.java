@@ -18,6 +18,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.sql.Connection;
 
+/**
+ * Classe que representa o menu do administrador.
+ * Permite ao administrador realizar várias ações administrativas, como registar gestores,
+ * listar utilizadores, ver notificações, aceitar/recusar utilizadores e certificações, etc.
+ */
 public class AdminMenuFrame extends JFrame implements ActionListener {
     private JButton[] botoes = new JButton[16];
     private String[] labels = {
@@ -96,6 +101,7 @@ public class AdminMenuFrame extends JFrame implements ActionListener {
         printButton.setMaximumSize(new Dimension(300, 40));
         printButton.addActionListener(e -> {
             Printer.printExtract(LogFileManager.readLogFile());
+            System.out.println(LogFileManager.readLogFile());
             JOptionPane.showMessageDialog(this, "Logs impressos com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         });
         contentPanel.add(printButton);

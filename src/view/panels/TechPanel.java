@@ -16,6 +16,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 
+/**
+ * TechPanel é um painel que exibe diferentes funcionalidades para técnicos,
+ * como visualizar notificações, inspecionar equipamentos, aceitar certificações,
+ * e realizar testes.
+ * Ele utiliza um CardLayout para alternar entre diferentes visualizações
+ * dependendo da ação do utilizador.
+ */
 public class TechPanel extends JPanel implements ActionListener {
 
     private CardLayout cardLayout;
@@ -292,6 +299,6 @@ public class TechPanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(java.awt.event.ActionEvent e) {
-        // Implementar a lógica de ação para os botões, se necessário
+
     }
 }
