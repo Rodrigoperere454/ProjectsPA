@@ -1,5 +1,8 @@
 package view.dialogs;
 
+import controller.DBconfig;
+import view.frames.InicialMenuFrame;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -85,13 +88,25 @@ public class DBDataDialog extends JDialog implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == botao_conectar) {
             String dbName = dbname.getText();
-            String hostName = host.getText();
-            String portNumber = port.getText();
             String username = user.getText();
+            String hostName = host.getText();
             String password = pass.getText();
+            String portNumber = port.getText();
 
-            JOptionPane.showMessageDialog(this, "Conexão estabelecida com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-            dispose();
+            if (dbname.getText().isEmpty() || host.getText().isEmpty() || port.getText().isEmpty() || user.getText().isEmpty() || pass.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor, preencha todos os campos.", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            } else {
+                DBconfig.alterarDadosBDini(dbName,username, password, hostName, portNumber);
+            }
+
+            if (DBconfig.getConnection() == null) {
+                JOptionPane.showMessageDialog(this, "Falha ao conectar à base de dados. Verifique os dados fornecidos.", "Erro", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Conexão estabelecida com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                dispose();
+            }
+
         }else if (e.getSource() == botao_cancelar) {
             dispose();
         }

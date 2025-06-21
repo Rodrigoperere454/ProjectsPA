@@ -1,4 +1,5 @@
 import controller.DBconfig;
+import view.dialogs.DBDataDialog;
 import view.frames.InicialMenuFrame;
 
 import java.sql.Connection;
@@ -15,13 +16,10 @@ public class Main {
 
         Connection connection = null;
 
-        while (connection == null) {
-            connection = DBconfig.getConnection();
-            Thread.sleep(1000);
-            if (connection == null) {
-                System.out.println("Se é a sua primeira vez no programa este erro é normal, caso este erro seja persistente contacte o suporte(Professor Marco de PA).");
-                DBconfig.configurarBD();
-            }
+        connection = DBconfig.getConnection();
+        if (connection == null) {
+            DBDataDialog dialog = new DBDataDialog();
+            dialog.setVisible(true);
         }
     }
 }

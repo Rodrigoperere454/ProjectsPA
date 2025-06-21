@@ -1,6 +1,7 @@
 package view.frames;
 
 import controller.DBconfig;
+import view.dialogs.DBDataDialog;
 import view.dialogs.LoginDialog;
 import view.dialogs.RegistarDialog;
 
@@ -118,7 +119,8 @@ public class InicialMenuFrame extends JFrame implements ActionListener {
             RegistarDialog registarDialog = new RegistarDialog(this);
             registarDialog.setVisible(true);
         } else if (e.getSource() == btn_db) {
-            System.out.println("Alterar Dados da Base de Dados clicked");
+            DBDataDialog dbDataDialog = new DBDataDialog();
+            dbDataDialog.setVisible(true);
         }
     }
 }
