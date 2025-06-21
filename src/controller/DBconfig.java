@@ -1,6 +1,7 @@
 package controller;
 import javax.imageio.stream.ImageInputStream;
 import java.io.*;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -19,8 +20,14 @@ public class DBconfig {
      */
     public static Connection getConnection() {
         try {
-            try (FileInputStream fis = new FileInputStream(iniPath)) {
-                properties.load(fis);
+            String configDir = new File(DBconfig.class.getProtectionDomain()
+                    .getCodeSource().getLocation().toURI()).getParent();
+
+            String configPath = configDir + File.separator + "config_database.ini";
+
+            System.out.println(configPath);
+            try (FileInputStream input = new FileInputStream(configPath)) {
+                properties.load(input);
             }
 
             String host = properties.getProperty("host");
@@ -43,6 +50,8 @@ public class DBconfig {
         } catch (IOException | SQLException e) {
             System.err.println("Erro ao conectar: " + e.getMessage());
             return null;
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
         }
 
     }

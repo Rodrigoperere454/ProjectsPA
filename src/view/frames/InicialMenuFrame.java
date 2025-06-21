@@ -1,5 +1,6 @@
 package view.frames;
 
+import controller.DBconfig;
 import view.dialogs.LoginDialog;
 import view.dialogs.RegistarDialog;
 
@@ -8,6 +9,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
+import java.io.File;
+import java.net.URISyntaxException;
 
 /**
  * Classe que representa o menu inicial da aplicação.
@@ -79,6 +82,19 @@ public class InicialMenuFrame extends JFrame implements ActionListener {
             }
         });
         cont.add(btn_sair);
+
+        try{
+            String configDir = new File(DBconfig.class.getProtectionDomain()
+                    .getCodeSource().getLocation().toURI()).getParent();
+
+            String configPath = configDir + File.separator + "config_database.ini";
+
+            JLabel label = new JLabel("Caminho do ficheiro de propriedades: " + configPath);
+            label.setAlignmentX(Component.CENTER_ALIGNMENT);
+            cont.add(label);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
 
         addWindowListener(new WindowAdapter() {
             @Override
