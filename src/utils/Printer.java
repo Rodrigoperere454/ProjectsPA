@@ -20,7 +20,6 @@ public class Printer {
      */
     public static void printExtract(List<Log> logs) {
         PrinterJob job = PrinterJob.getPrinterJob();
-        List<Log> logList = LogFileManager.readLogFile();
 
         job.setJobName("Extrato de Ações do Processo");
 

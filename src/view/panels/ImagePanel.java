@@ -104,10 +104,10 @@ public class ImagePanel extends JPanel {
             String newFileName = username + extension;
             String destinationPath = IMAGE_FOLDER + newFileName;
 
-            // Cria diretório se não existir
+            // Cria a diretoria se não existir
             new File(IMAGE_FOLDER).mkdirs();
 
-            // Copia o ficheiro para a pasta destino
+            // Copia o ficheiro para a pasta
             Files.copy(new File(originalPath).toPath(), new File(destinationPath).toPath(), StandardCopyOption.REPLACE_EXISTING);
 
             // Lê a imagem copiada
