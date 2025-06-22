@@ -20,10 +20,12 @@ public class DBconfig {
      */
     public static Connection getConnection() {
         try {
-            String configDir = new File(DBconfig.class.getProtectionDomain()
+            /*String configDir = new File(DBconfig.class.getProtectionDomain()
                     .getCodeSource().getLocation().toURI()).getParent();
 
-            String configPath = configDir + File.separator + "config_database.ini";
+            String configPath = configDir + File.separator + "config_database.ini";*/
+
+            String configPath = "config_database.ini";
 
             System.out.println(configPath);
             try (FileInputStream input = new FileInputStream(configPath)) {
@@ -50,8 +52,9 @@ public class DBconfig {
         } catch (IOException | SQLException e) {
             System.err.println("Erro ao conectar: " + e.getMessage());
             return null;
-        } catch (URISyntaxException e) {
+        /*} catch (URISyntaxException e) {
             throw new RuntimeException(e);
+        }*/
         }
 
     }
@@ -87,23 +90,18 @@ public class DBconfig {
      * @param port
      */
     public static void alterarDadosBDini(String dataBase, String user, String password, String host, String port) {
-        try {
-            String configDir = new File(DBconfig.class.getProtectionDomain()
-                    .getCodeSource().getLocation().toURI()).getParent();
-            String configPath = configDir + File.separator + "config_database.ini";
+        // Obtém o diretório do ficheiro de configuração que está na root do projeto
+        String configPath = "config_database.ini";
 
-            try (FileOutputStream fos = new FileOutputStream(configPath)) {
-                properties.setProperty("dbname", dataBase);
-                properties.setProperty("user", user);
-                properties.setProperty("password", password);
-                properties.setProperty("host", host);
-                properties.setProperty("port", port);
-                properties.store(fos, null);
-            } catch (IOException e) {
-                System.err.println("Erro ao guardar dados: " + e.getMessage());
-            }
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
+        try (FileOutputStream fos = new FileOutputStream(configPath)) {
+            properties.setProperty("dbname", dataBase);
+            properties.setProperty("user", user);
+            properties.setProperty("password", password);
+            properties.setProperty("host", host);
+            properties.setProperty("port", port);
+            properties.store(fos, null);
+        } catch (IOException e) {
+            System.err.println("Erro ao guardar dados: " + e.getMessage());
         }
     }
 }

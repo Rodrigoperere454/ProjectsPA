@@ -68,7 +68,7 @@ public class ImagePanel extends JPanel {
      */
     private void carregarImagemDefault() {
         try {
-            image = ImageIO.read(new File("public/imgs/user/profile/default_profile_img.png"));
+            image = ImageIO.read(new File("/public/imgs/user/profile/default_profile_img.png"));
             scaledImage = image.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
             repaint();
         } catch (Exception e) {
